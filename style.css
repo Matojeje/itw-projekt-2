@@ -878,6 +878,8 @@ section#showcase {
 
   & ul, li { list-style: none }
 
+  & .short { text-align: left }
+
   & .gallery {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(var(--item-width, 15rem), 1fr));
@@ -915,7 +917,8 @@ section#showcase {
   }
 
   & .games {
-    --item-width: 20rem;
+    display: flex;
+    flex-direction: column;
   }
 
   & .game {
@@ -929,16 +932,13 @@ section#showcase {
     gap: 1rem;
 
     & .name { grid-area: name }
-
-    & .blurb {
-      grid-area: blurb;
-      text-align: justify;
-    }
+    & .blurb { grid-area: blurb }
 
     & .thumb {
       grid-area: thumb;
       display: block;
       width: 100%;
+      margin-inline: auto;
       & > * {
         border-radius: 0.5rem;
       }
@@ -964,6 +964,7 @@ section#showcase {
     flex-direction: column;
     gap: 2rem;
     padding-top: 1rem;
+    margin-bottom: 4rem;
 
     position: relative;
 
@@ -978,13 +979,14 @@ section#showcase {
     }
 
     & li:not(:has(picture)) {
-      margin-right: 30%;
+      margin-right: min(30%);
       opacity: 85%;
       height: 120px;
     }
   }
 
   .embed-bandcamp {
+    background-color: var(--card);
     width: min(100%, 700px);
     height: 120px;
   }
@@ -1018,10 +1020,18 @@ footer {
 
 @media (width < 768px) {
   header nav ol { display: none; visibility: hidden }
+  #showcase-music .tracks li:has(.embed-bandcamp) { margin: 0 }
 }
 
 @media (width >= 768px) {
   #menu { display: none; visibility: hidden }
+  article#showcase-games .games .game {
+      display: grid;
+      grid-template-areas: "thumb name genre" "thumb blurb blurb";
+      grid-template-columns: minmax(20vw, 5rem) auto 15ch;
+      grid-template-rows: auto auto;
+      gap: .5lh 2rem;
+  }
 }
 
 @media (width > 1200px) {
@@ -1077,7 +1087,7 @@ footer {
       gap: 1rem;
     }
 
-    & li {
+    & li:has(.icon) {
       padding: .5rem 1rem;
       cursor: pointer;
 
@@ -1090,6 +1100,8 @@ footer {
       transition: background-color var(--anim-3);
     }
 
+    & h5 { padding: .5rem 1rem }
+
     & hr {
       border: none;
       border-top: 2px solid var(--line);
@@ -1100,16 +1112,16 @@ footer {
 
   &[aria-expanded="false"] {
     display: none;
-    visiility: hidden;
+    visibility: hidden;
     max-width: calc(100vw + var(--sidebar-width));
     opacity: 0;
   }
 
   /* Opened state */
 
-  /* &[aria-expanded="true"] {
+  &[aria-expanded="true"] {
     animation: fadein var(--anim-sidebar);
-  } */
+  }
 
 }
 

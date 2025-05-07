@@ -116,28 +116,28 @@
     </nav>
     <form class="buttons">
       <button
-        id="translate" type="button" data-translated-tooltip
+        id="translate" type="button" data-translated-tooltip aria-labelledby="translate-label"
         data-tooltip-cs="Změnit jazyk" data-tooltip-en="Change language"
         onclick="switchLanguage(), this.classList.toggle('toggled')"
       >
         <img data-inject id="language-globe" src="assets/language.svg" alt="🌐">
         <img data-inject class="language-flag" lang="cs" alt="🇨🇿" src="assets/flag-czech-republic.svg">
         <img data-inject class="language-flag" lang="en" alt="🇺🇸" src="assets/flag-united-states.svg" hidden>
-        <label for="translate" class="sr-only">
+        <span id="translate-label" class="sr-only">
           <span lang="cs">Změnit jazyk</span>
           <span lang="en">Change language</span>
-        </label>
+        </span>
       </button>
       <button
-        id="theme" type="button" data-translated-tooltip
+        id="theme" type="button" data-translated-tooltip aria-labelledby="theme-label"
         data-tooltip-cs="Barevné schéma" data-tooltip-en="Toggle theme"
         onclick="switchTheme()"
       >
         <i class="icon" data-icon="dark_mode" data-theme-icon>🌓</i>
-        <label for="theme" class="sr-only">
+        <span id="theme-label" class="sr-only">
           <span lang="cs">Barevné schéma</span>
           <span lang="en">Toggle theme</span>
-        </label>
+        </span>
       </button>
       <label
         id="menu" for="menu-button" data-translated-tooltip
@@ -285,7 +285,7 @@
 
       <article id="showcase-art">
         <h3 data-cs="Obrázky" data-en="Artwork">Obrázky</h3>
-        <p>
+        <p class="short">
           <span lang="cs">Moje nejpovedenější ilustrace za poslední dva roky.</span>
           <span lang="en" hidden>My best illustrations from the past two years.</span>
         </p>
@@ -406,7 +406,7 @@
 
         <h3 data-cs="Hudba" data-en="Music">Hudba</h3>
 
-        <p>
+        <p class="short">
           <span lang="cs">Něco málo k&nbsp;poslechu! Pár skladeb je originální tvorba, ostatní jsou zase cover verze a&nbsp;remixy jiných skladeb.</span>
           <span lang="en" hidden>A little something to listen to! A couple of tracks are originals, and some are cover versions and remixes of other tracks.</span>
         </p>
@@ -516,6 +516,7 @@
     <div id="mobile-nav-behind" onclick="mobileMenu(false)"></div>
     <nav role="navigation">
       <ol>
+        <li><h5>Odkazy</h5></li>
         <li onclick="mobileMenu(false)"><a href="#home">
           <i class="icon" data-icon="home">⌂</i>
           <span data-cs="Domů" data-en="Home">Domů</span>
@@ -543,7 +544,12 @@
           <i class="icon" data-icon="genres">𝅘𝅥𝅮</i>
           <span data-cs="Hudba" data-en="Music">Hudba</span>
         </a></li>
-        <hr>
+        <li onclick="mobileMenu(false)"><a href="#showcase-music">
+          <i class="icon" data-icon="contract">📃</i>
+          <span data-cs="Zdroje" data-en="Sources">Zdroje</span>
+        </a></li>
+        <li><hr></li>
+        <li><h5>Nastavení</h5></li>
         <li class="setting" onclick="switchLanguage(), this.classList.toggle('toggled')">
           <i class="icon" data-icon="language">🌐</i>
           <span lang="cs">Změnit jazyk</span>
@@ -588,15 +594,15 @@
 
 <!--
                                      ,
-              ,-.       _,---._ __  / \
+              ,-.       _,-~-._ __  / \
              /  )    .-'       `./ /   \
             (  (   ,'            `/    /|
              \  `-"             \'\   / |
               `.              ,  \ \ /  |
-               /`.          ,'-`----Y   |
+               /`.          ,'-`-~-~Y   |
               (            ;        |   '
               |  ,-.    ,-'         |  /
               |  | (   |        hjw | /
               )  |  \  `.___________|/
-              `--'   `--'
+              `-~'   `-~'
 -->
