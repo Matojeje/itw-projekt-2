@@ -156,7 +156,7 @@
       transition-behavior: allow-discrete;
     }
 
-    &:hover::after {
+    &:hover::after, &:focus::after {
       display: block;
       visibility: visible;
       opacity: 1;
@@ -747,7 +747,7 @@ section#about {
     --edge: calc(1rem - 5vw);
   }
 
-  & .avatar:hover {
+  & .avatar:hover, .avatar:focus {
     animation: bounce linear infinite var(--anim-4);
   }
 
@@ -833,7 +833,7 @@ section#about {
 
       }
 
-      &:hover {
+      &:hover, &:focus {
         cursor: zoom-in;
 
         & > .parallax {

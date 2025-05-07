@@ -28,21 +28,24 @@ document.addEventListener("DOMContentLoaded", () => {
   // Add sounds to links
 
   $all(":is(main, footer) :is(a, :link)").forEach(el => registerSounds(el, {
-    pointerenter: "hover"
+    pointerenter: "hover",
+    focusin: "hover"
   }))
 
   // Add sounds to header buttons
 
   $all("header .buttons > *").forEach(el => registerSounds(el, {
     pointerenter: "hover",
+    focusin: "hover",
     pointerdown: "press",
     pointerup: "unpress",
   }))
 
   // Add sounds to nav links
 
-  $all("header nav li a, #mobile-nav nav li").forEach(el => registerSounds(el, {
+  $all("header nav li a, #mobile-nav nav li:has(.icon)").forEach(el => registerSounds(el, {
     pointerenter: "hover",
+    focusin: "hover",
     pointerdown: "tap",
     pointerup: "nav",
   }))
@@ -60,8 +63,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
   $all(".hobby").forEach(el => registerSounds(el, {
     pointerenter: "hover",
+    focusin: "hover",
     pointerdown: "zoomin",
     pointerup: "zoomout"
+  }))
+
+  // Add sounds to drawings
+
+  $all(".drawings li").forEach(el => registerSounds(el, {
+    pointerenter: "hover",
+    focusin: "hover"
+  }))
+
+  // Add sounds to avatars
+
+  $all(".avatar").forEach(el => registerSounds(el, {
+    pointerenter: "bounce",
+    focusin: "bounce"
   }))
 })
 
@@ -71,7 +89,8 @@ document.addEventListener("tooltipsAdded", e => {
   /** @type {HTMLElement[]} */
   const tooltipped = /** @type {CustomEvent} */ (e).detail
   tooltipped.forEach(el => registerSounds(el, {
-    pointerenter: "tooltip"
+    pointerenter: "tooltip",
+    focusin: "tooltip"
   }))
 })
 

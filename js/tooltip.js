@@ -12,13 +12,15 @@ document.addEventListener("DOMContentLoaded", () => {
   // Set up tooltip data attributes on page load
 
   abbreviations.forEach(abbr => {
+    abbr.ariaLabel = abbr.title
     abbr.dataset.tooltip = abbr.title
     // Remove title to prevent the native tooltip
     abbr.removeAttribute("title")
   })
 
   terms.forEach(term => {
-    term.addEventListener("mouseover", () => updateTermTooltip(term))
+    term.addEventListener("pointerover", () => updateTermTooltip(term))
+    term.addEventListener("focusin", () => updateTermTooltip(term))
     // Also pre-fill the tooltip so the first time hover looks correct
     updateTermTooltip(term)
   })
@@ -30,6 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   translatable.forEach(el => {
     el.addEventListener("pointerover", () => updateTranslatedTooltip(el))
+    el.addEventListener("focusin", () => updateTranslatedTooltip(el))
     window.addEventListener("languageSwitched", () => updateTranslatedTooltip(el))
   })
 
@@ -39,6 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   allTooltippedElements.forEach(el => {
     el.addEventListener("pointerover", () => fitTooltipToViewport(el))
+    el.addEventListener("focusin", () => fitTooltipToViewport(el))
     // Also pre-calculate the tooltip to prevent overflow
     fitTooltipToViewport(el)
   })
@@ -64,6 +68,7 @@ function updateTermTooltip(term) {
     throw new Error("Bad definition for term tooltip")
 
   term.dataset.tooltip = `${capitalize(explanation.name)} = ${explanation.definition}`
+  term.ariaDescription = explanation.definition
 }
 
 /** @param {HTMLElement} el  */
@@ -73,6 +78,7 @@ function updateTranslatedTooltip(el) {
   if (!(translationKey in el.dataset))
     throw new Error(`Couldn't find ${translationKey} in ${el}`)
   el.dataset.tooltip = el.dataset[translationKey]
+  el.ariaLabel = el.dataset[translationKey] || ""
   return true
 }
 

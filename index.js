@@ -96,6 +96,10 @@ document.addEventListener("languageSwitched", () =>
 /** Call this function after injecting the H1 svg */
 function replaceTitle() {
   $("h1 span")?.setAttribute("hidden", "")
+  setTimeout(() => {
+    const newTitle = $("h1 svg")
+    if (newTitle) newTitle.tabIndex = 0
+  }, 2000)
 }
 
 /** Call this function after the Material icon font finshed loading */

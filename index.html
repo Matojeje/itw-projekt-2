@@ -8,6 +8,21 @@
   <title>Maty</title>
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 
+  <!-- Metadata -->
+  <meta name="robots" content="noindex nofollow">
+  <meta name="author" content="Matouš Dřízhal">
+  <meta name="theme-color" content="#56d888">
+  <meta name="title" content="Matyho projekt do ITW">
+  <meta name="description" content="Malá stránka o mě | školní projekt">
+  <meta name="language" content="cs-CZ">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://matojeje.github.io/itw-projekt-2/">
+  <meta property="og:title" content="Matyho projekt do ITW">
+  <meta property="og:description" content="Malá stránka o mě | školní projekt">
+  <meta property="og:image" content="https://matojeje.github.io/itw-projekt-2/assets/thumbnail.png">
+  <meta property="twitter:card" content="summary_large_image">
+
   <!-- Styles -->
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="light.css" media="(prefers-color-scheme: light)">
@@ -23,8 +38,8 @@
       user-select: none;
     }
     slot,
-    html[lang=cs] *[lang=en],
-    html[lang=en] *[lang=cs]
+    html[lang=cs] *[lang=en]:not(.force-lang),
+    html[lang=en] *[lang=cs]:not(.force-lang)
     { display: none !important; }
   </style>
 
@@ -83,33 +98,33 @@
         <div class="social-tagline"></div>
       </aside>
     </div>
-    <nav role="navigation">
+    <nav>
       <ol>
         <!-- <li><a href="#home">
-          <i class="icon" data-icon="home">⌂</i>
+          <i class="icon" aria-hidden="true" data-icon="home">⌂</i>
           <span data-cs="Domů" data-en="Home">Domů</span>
         </a></li> -->
         <li><a href="#about"><div class="nav-icon">
-          <i class="icon" data-icon="info">ⓘ</i>
+          <i class="icon" aria-hidden="true" data-icon="info">ⓘ</i>
           <span data-cs="O mě" data-en="About">O mě</span>
         </div></a></li>
         <!-- <li><a href="#about-hobbies">
-          <i class="icon" data-icon="interests">⛶</i>
+          <i class="icon" aria-hidden="true" data-icon="interests">⛶</i>
           <span data-cs="Koníčky" data-en="Hobbies">Koníčky</span>
         </a></li> -->
         <!-- <li><a href="#showcase">
           <span data-cs="Ukázky" data-en="Showcase">Ukázky</span>
         </a></li> -->
         <li><a href="#showcase-art"><div class="nav-icon">
-          <i class="icon" data-icon="palette">🎨</i>
+          <i class="icon" aria-hidden="true" data-icon="palette">🎨</i>
           <span data-cs="Obrázky" data-en="Artwork">Obrázky</span>
         </div></a></li>
         <li><a href="#showcase-games"><div class="nav-icon">
-          <i class="icon" data-icon="videogame_asset">🎮</i>
+          <i class="icon" aria-hidden="true" data-icon="videogame_asset">🎮</i>
           <span data-cs="Hry" data-en="Games">Hry</span>
         </div></a></li>
         <li><a href="#showcase-music"><div class="nav-icon">
-          <i class="icon" data-icon="genres">𝅘𝅥𝅮</i>
+          <i class="icon" aria-hidden="true" data-icon="genres">&sung;</i>
           <span data-cs="Hudba" data-en="Music">Hudba</span>
         </div></a></li>
       </ol>
@@ -133,7 +148,7 @@
         data-tooltip-cs="Barevné schéma" data-tooltip-en="Toggle theme"
         onclick="switchTheme()"
       >
-        <i class="icon" data-icon="dark_mode" data-theme-icon>🌓</i>
+        <i class="icon" aria-hidden="true" data-icon="dark_mode" data-theme-icon>🌓</i>
         <span id="theme-label" class="sr-only">
           <span lang="cs">Barevné schéma</span>
           <span lang="en">Toggle theme</span>
@@ -143,8 +158,8 @@
         id="menu" for="menu-button" data-translated-tooltip
         data-tooltip-cs="Mobilní nabídka" data-tooltip-en="Mobile menu"
       >
-        <input id="menu-button" type="checkbox" class="sr-only" oninput="mobileMenu()">
-        <i class="icon" data-icon="menu">☰</i>
+        <input id="menu-button" type="checkbox" class="sr-only" oninput="mobileMenu()" tabindex="-1">
+        <i class="icon" aria-hidden="true" data-icon="menu">☰</i>
         <span id="menu-label" class="sr-only"
           data-cs="Mobilní nabídka" data-en="Mobile menu">Mobilní nabídka
         </span>
@@ -154,10 +169,13 @@
 
   <main class="side-pattern">
     <section id="home" class="media">
+      <h2 class="sr-only">
+        <strong data-cs="Domů" data-en="Home">Domů</strong>
+      </h2>
       <p class="short">
         <strong data-cs="Ahoj!" data-en="Hi!">Ahoj!</strong>
-        <span lang="cs">Tohle je moje ukázková stránka pro účely projektu do předmětu <abbr title="Tvorba webových stránek" >ITW</abbr>. V praxi bych tyhle informace jen tak veřejně na internet nedával, ale o ničem jiném mě psát nenapadlo, tak proč si s tím trochu nevyhrát?<!-- Nechci být profesionální jako na životopise, jenom se představím jak to nejlépe umím.  Místo výplňového textu budu používat směs reálných informací a detailů ohledně implementace, čímž projekt vlastně dokumentuje sám sebe. --></span>
-        <span lang="en" hidden>This is an example webpage for the my project for the <abbr title="Web design">ITW</abbr> subject. Normally, I&nbsp;wouldn't put this sort of info out there on the web, but I&nbsp;couldn't think of anything else to write about, so why not have some fun?<!-- This isn't a résumé, so I'm not going to be formal about it, I'll just introduce myself the best way I&nbsp;know. --></span>
+        <span lang="cs">Tohle je moje ukázková stránka pro účely projektu do předmětu <abbr title="Tvorba webových stránek" tabindex="0">ITW</abbr>. V praxi bych tyhle informace jen tak veřejně na internet nedával, ale o ničem jiném mě psát nenapadlo, tak proč si s tím trochu nevyhrát?<!-- Nechci být profesionální jako na životopise, jenom se představím jak to nejlépe umím.  Místo výplňového textu budu používat směs reálných informací a detailů ohledně implementace, čímž projekt vlastně dokumentuje sám sebe. --></span>
+        <span lang="en" hidden>This is an example webpage for the my project for the <abbr title="Web design" tabindex="0">ITW</abbr> subject. Normally, I&nbsp;wouldn't put this sort of info out there on the web, but I&nbsp;couldn't think of anything else to write about, so why not have some fun?<!-- This isn't a résumé, so I'm not going to be formal about it, I'll just introduce myself the best way I&nbsp;know. --></span>
       </p>
       <noscript>
         <p lang="cs" class="short">Vypadá to, že je vypnutý JavaScript. Stránka by víceméně pořád měla fungovat, ale bohužel přijde o pár interaktivních funkcí, a nebude vypadat přesně tak, jak jsem plánoval.</p>
@@ -172,7 +190,7 @@
       <div class="col">
         <article id="about-irl">
 
-          <picture class="avatar media">
+          <picture class="avatar media" tabindex="0">
             <source media="(resolution < 1.5dppx)" srcset="assets/about/maty.avif" type="image/avif">
             <source media="(resolution < 1.5dppx)" srcset="assets/about/maty.webp" type="image/webp">
             <source media="(resolution >= 1.5dppx)" srcset="assets/about/maty-2x.webp" type="image/avif">
@@ -184,31 +202,31 @@
           <h3 data-cs="V reálu" data-en="In real life">V reálu</h3>
 
           <p>
-            <span lang="cs">Jsem z&nbsp;Olomouce a&nbsp;právě studuju bakalářský obor <a href="https://www.fit.vut.cz/applicants/degree-field/17673/.cs">Informační technologie</a> na <abbr title="Fakultě Informačních Technologií">FIT</abbr>&nbsp;<abbr title="Vysokého Učení Technického">VUT</abbr> v&nbsp;Brně. Předtím jsem chodil na <a href="https://spseol.cz/">elektro&shy;průmyslovku v Olomouci</a>, a&nbsp;obě dvě školy byly shodou náhod na ulici stejného jména (Bože&shy;těchova), byť každá v&nbsp;jiném městě.</span>
+            <span lang="cs">Jsem z&nbsp;Olomouce a&nbsp;právě studuju bakalářský obor <a href="https://www.fit.vut.cz/applicants/degree-field/17673/.cs">Informační technologie</a> na <abbr title="Fakultě Informačních Technologií" tabindex="0">FIT</abbr>&nbsp;<abbr title="Vysokého Učení Technického" tabindex="0">VUT</abbr> v&nbsp;Brně. Předtím jsem chodil na <a href="https://spseol.cz/">elektro&shy;průmyslovku v Olomouci</a>, a&nbsp;obě dvě školy byly shodou náhod na ulici stejného jména (Bože&shy;těchova), byť každá v&nbsp;jiném městě.</span>
             <!-- https://ell.stackexchange.com/a/100972 -->
-            <span lang="en" hidden>I'm from Olomouc and I'm an <a href="https://www.fit.vut.cz/applicants/degree-field/17673/.en">Information technology</a> undergraduate in <abbr title="the Faculty of Information Technology">FIT</abbr> at <abbr title="Brno University of Technology">BUT</abbr> in Brno. Before that, I&nbsp;attended a&nbsp;<a href="https://spseol.cz/">electrical engineering high school</a> in Olomouc, and funnily enough, both schools had the same street name (Bože&shy;těchova) despite being in different cities.</span>
+            <span lang="en" hidden>I'm from Olomouc and I'm an <a href="https://www.fit.vut.cz/applicants/degree-field/17673/.en">Information technology</a> undergraduate in <abbr title="the Faculty of Information Technology" tabindex="0">FIT</abbr> at <abbr title="Brno University of Technology" tabindex="0">BUT</abbr> in Brno. Before that, I&nbsp;attended a&nbsp;<a href="https://spseol.cz/">electrical engineering high school</a> in Olomouc, and funnily enough, both schools had the same street name (Bože&shy;těchova) despite being in different cities.</span>
           </p>
 
           <p>
-            <span lang="cs">Po Covidu jsem taky začal cestovat po Evropě, nejčastěji do Krakova, ale aspoň jednou ročně se podívám i&nbsp;do Německa nebo Švédska. Svůj menší zájem o&nbsp;veřejnou dopravu (ne, nejsem <span data-term="1">šotouš</span>) jsem si pak prohloubil tím, že jsem si na auto&shy;busovém nádraží sehnal teď už několika&shy;letou brigádu v&nbsp;informační kanceláři, kde pomáhám cestujícím najít dobré spoje a&nbsp;prodávám jízdenky. Raději jezdím vlakem, ale jako student si nadevše cením levných možností, a&nbsp;auto&shy;busy mě většinou vycházejí levněji. Do Brna dojíždím na každé cvičení.</span>
-            <span lang="en" hidden>After Covid, I&nbsp;also started travelling across Europe, mostly to Kraków, but I&nbsp;also try to visit Germany or Sweden at least once a year. I've developed my small interest in public transit (no, I'm not a <span data-term="1">railfan</span>) by getting a long-term part-time job at my city's bus terminal where I&nbsp;help passengers find good connections and sell tickets. I&nbsp;prefer taking the train when I&nbsp;can, but like any student, I'm most attracted by low prices, which usually goes to buses instead. I&nbsp;commute to Brno for every exercise and computer lab.</span>
+            <span lang="cs">Po Covidu jsem taky začal cestovat po Evropě, nejčastěji do Krakova, ale aspoň jednou ročně se podívám i&nbsp;do Německa nebo Švédska. Svůj menší zájem o&nbsp;veřejnou dopravu (ne, nejsem <span data-term="1" role="term" tabindex="0">šotouš</span>) jsem si pak prohloubil tím, že jsem si na auto&shy;busovém nádraží sehnal teď už několika&shy;letou brigádu v&nbsp;informační kanceláři, kde pomáhám cestujícím najít dobré spoje a&nbsp;prodávám jízdenky. Raději jezdím vlakem, ale jako student si nadevše cením levných možností, a&nbsp;auto&shy;busy mě většinou vycházejí levněji. Do Brna dojíždím na každé cvičení.</span>
+            <span lang="en" hidden>After Covid, I&nbsp;also started travelling across Europe, mostly to Kraków, but I&nbsp;also try to visit Germany or Sweden at least once a year. I've developed my small interest in public transit (no, I'm not a <span data-term="1" role="term" tabindex="0">railfan</span>) by getting a long-term part-time job at my city's bus terminal where I&nbsp;help passengers find good connections and sell tickets. I&nbsp;prefer taking the train when I&nbsp;can, but like any student, I'm most attracted by low prices, which usually goes to buses instead. I&nbsp;commute to Brno for every exercise and computer lab.</span>
           </p>
 
           <p>
-            <span lang="cs">Sportovec úplně nejsem, ale rád si zajedu na kole jen tak pro radost, třeba na Náklo nebo <a href="https://www.zmrzlina-starnov.cz/">na zmrzlinu do Štarnova</a>&nbsp;&ndash; placatá Haná je pro cyklistiku jako stvořená. Rád i&nbsp;chodím na procházky, abych měl od ostatních klid. Většinu času kdy jsem venku mám na sobě sluchátka, a&nbsp;poslouchám hudbu nebo <span data-term="2">podcasty</span>. Jinak se zajímám o programování, typo&shy;grafii, karto&shy;grafii, lingvistiku, a&nbsp;do hudebky jsem chodil od školky až do konce střední.</span>
-            <span lang="en" hidden>I'm not one to exercise, but I&nbsp;like cycling around for leisure, like to visit the local quarry lake or <a href="https://www.zmrzlina-starnov.cz/">get some ice cream</a>&nbsp;&ndash; I&nbsp;live in a very flat region which is ideal for cycling. I&nbsp;also like taking walks to get a break from everyone else. Most of the time outside I'm wearing headphones so I&nbsp;can listen to music or <span data-term="2">podcasts</span>. Other than that, I'm interested in programming, typo&shy;graphy, carto&shy;graphy, linguistics, and I've had piano lessons for over a decade.</span>
+            <span lang="cs">Sportovec úplně nejsem, ale rád si zajedu na kole jen tak pro radost, třeba na Náklo nebo <a href="https://www.zmrzlina-starnov.cz/">na zmrzlinu do Štarnova</a>&nbsp;&ndash; placatá Haná je pro cyklistiku jako stvořená. Rád i&nbsp;chodím na procházky, abych měl od ostatních klid. Většinu času kdy jsem venku mám na sobě sluchátka, a&nbsp;poslouchám hudbu nebo <span data-term="2" role="term" tabindex="0">podcasty</span>. Jinak se zajímám o programování, typo&shy;grafii, karto&shy;grafii, lingvistiku, a&nbsp;do hudebky jsem chodil od školky až do konce střední.</span>
+            <span lang="en" hidden>I'm not one to exercise, but I&nbsp;like cycling around for leisure, like to visit the local quarry lake or <a href="https://www.zmrzlina-starnov.cz/">get some ice cream</a>&nbsp;&ndash; I&nbsp;live in a very flat region which is ideal for cycling. I&nbsp;also like taking walks to get a break from everyone else. Most of the time outside I'm wearing headphones so I&nbsp;can listen to music or <span data-term="2" role="term" tabindex="0">podcasts</span>. Other than that, I'm interested in programming, typo&shy;graphy, carto&shy;graphy, linguistics, and I've had piano lessons for over a decade.</span>
           </p>
         </article>
 
         <article id="about-online">
 
-          <picture class="avatar media">
+          <picture class="avatar media" tabindex="0">
             <source media="(resolution < 1.5dppx)" srcset="assets/about/mato.avif" type="image/avif">
             <source media="(resolution < 1.5dppx)" srcset="assets/about/mato.webp" type="image/webp">
             <source media="(resolution >= 1.5dppx)" srcset="assets/about/mato-2x.webp" type="image/avif">
             <source media="(resolution >= 1.5dppx)" srcset="assets/about/mato-2x.webp" type="image/webp">
             <source media="(resolution >= 1.5dppx)" srcset="assets/about/mato-2x.jpg" type="image/jpeg">
-            <img src="assets/about/mato.jpg" alt="Obrázek Riolu">
+            <img src="assets/about/mato.jpg" alt="Riolu">
           </picture>
 
           <h3>Online</h3>
@@ -219,8 +237,8 @@
           </p>
 
           <p>
-            <span lang="cs">Mimo to taky čas od času nahrávám videa na YouTube, zkouším si 3D modelování, a&nbsp;s&nbsp;kamarády z Discordu se společně účastníme v&nbsp;<span data-term="3">Game Jamech</span>, kde mám většinou na starost sound&shy;track a&nbsp;výpomoc s&nbsp;programováním. Samozřejmě hry nejen vytvářím, ale i&nbsp;hraju, ale poslední dobou ne tak často. Mám nejradši nenáročné <span data-term="4">indie</span> hry, Nintendo hry a&nbsp;hudební/rytmické hry včetně arkádových. Jinak rád přispívám do open-source projektů: do <a href="https://www.openstreetmap.org/about">Open&shy;Street&shy;Map</a>, <a href="https://cs.wikipedia.org/wiki/Nápověda:Úvod">Wikipedie</a> a&nbsp;něco málo na <a href="https://docs.github.com/en/get-started/exploring-projects-on-github/finding-ways-to-contribute-to-open-source-on-github">GitHubu</a>.</span>
-            <span lang="en" hidden>Besides that, I&nbsp;sometimes make YouTube videos, try out 3D modelling, and participate in <span data-term="3">Game Jams</span> together with my friends from Discord, where I'm usually responsible for making the sound&shy;track and help with some of the coding. Of course, I&nbsp;don't just make games, I&nbsp;play them too, but not as often as I&nbsp;used to. My go-tos are <span data-term="4">indie</span> games, Nintendo games and music/rhythm games, even the arcade ones. Other than that, I&nbsp;like contributing to open-source projects: <a href="https://www.openstreetmap.org/about">Open&shy;Street&shy;Map</a>, <a href="https://en.wikipedia.org/wiki/Help:Getting_started">Wikipedia</a> and a bit of <a href="https://docs.github.com/en/get-started/exploring-projects-on-github/finding-ways-to-contribute-to-open-source-on-github">GitHub</a>.</span>
+            <span lang="cs">Mimo to taky čas od času nahrávám videa na YouTube, zkouším si 3D modelování, a&nbsp;s&nbsp;kamarády z Discordu se společně účastníme v&nbsp;<span data-term="3" role="term" tabindex="0">Game Jamech</span>, kde mám většinou na starost sound&shy;track a&nbsp;výpomoc s&nbsp;programováním. Samozřejmě hry nejen vytvářím, ale i&nbsp;hraju, ale poslední dobou ne tak často. Mám nejradši nenáročné <span data-term="4" role="term" tabindex="0">indie</span> hry, Nintendo hry a&nbsp;hudební/rytmické hry včetně arkádových. Jinak rád přispívám do <span lang="en" class="force-lang">open-source</span> projektů: do <a href="https://www.openstreetmap.org/about">Open&shy;Street&shy;Map</a>, <a href="https://cs.wikipedia.org/wiki/Nápověda:Úvod">Wikipedie</a> a&nbsp;něco málo na <a href="https://docs.github.com/en/get-started/exploring-projects-on-github/finding-ways-to-contribute-to-open-source-on-github">GitHubu</a>.</span>
+            <span lang="en" hidden>Besides that, I&nbsp;sometimes make YouTube videos, try out 3D modelling, and participate in <span data-term="3" role="term" tabindex="0">Game Jams</span> together with my friends from Discord, where I'm usually responsible for making the sound&shy;track and help with some of the coding. Of course, I&nbsp;don't just make games, I&nbsp;play them too, but not as often as I&nbsp;used to. My go-tos are <span data-term="4" role="term" tabindex="0">indie</span> games, Nintendo games and music/rhythm games, even the arcade ones. Other than that, I&nbsp;like contributing to open-source projects: <a href="https://www.openstreetmap.org/about">Open&shy;Street&shy;Map</a>, <a href="https://en.wikipedia.org/wiki/Help:Getting_started">Wikipedia</a> and a bit of <a href="https://docs.github.com/en/get-started/exploring-projects-on-github/finding-ways-to-contribute-to-open-source-on-github">GitHub</a>.</span>
           </p>
 
           <p>
@@ -243,35 +261,35 @@
         <h3 data-cs="Moje koníčky" data-en="My hobbies">Moje koníčky</h3>
 
         <ul class="hobbies media gallery">
-          <li class="hobby">
+          <li class="hobby" tabindex="0">
             <div class="parallax" aria-hidden style="--img: url('assets/hobbies/fitvut.webp')"></div>
             <div class="label"><span data-cs="Informatika" data-en="Computer science">Informatika</span></div>
           </li>
-          <li class="hobby">
+          <li class="hobby" tabindex="0">
             <div class="parallax" aria-hidden style="--img: url('assets/hobbies/music.webp')"></div>
             <div class="label"><span data-cs="Hudba" data-en="Music">Hudba</span></div>
           </li>
-          <li class="hobby">
+          <li class="hobby" tabindex="0">
             <div class="parallax" aria-hidden style="--img: url('assets/hobbies/cycling.webp')"></div>
             <div class="label"><span data-cs="Cyklistika" data-en="Cycling">Cyklistika</span></div>
           </li>
-          <li class="hobby">
+          <li class="hobby" tabindex="0">
             <div class="parallax" aria-hidden style="--img: url('assets/hobbies/electro.webp')"></div>
             <div class="label"><span data-cs="Bastlení" data-en="Circuits">Bastlení</span></div>
           </li>
-          <li class="hobby">
+          <li class="hobby" tabindex="0">
             <div class="parallax" aria-hidden style="--img: url('assets/hobbies/carto.webp')"></div>
             <div class="label"><span data-cs="Kartografie" data-en="Cartography">Kartografie</span></div>
           </li>
-          <li class="hobby">
+          <li class="hobby" tabindex="0">
             <div class="parallax" aria-hidden style="--img: url('assets/hobbies/walks.webp')"></div>
             <div class="label"><span data-cs="Turistika" data-en="Tourism">Turistika</span></div>
           </li>
-          <li class="hobby">
+          <li class="hobby" tabindex="0">
             <div class="parallax" aria-hidden style="--img: url('assets/hobbies/travel.webp')"></div>
             <div class="label"><span data-cs="Cestování" data-en="Travel">Cestování</span></div>
           </li>
-          <li class="hobby">
+          <li class="hobby" tabindex="0">
             <div class="parallax" aria-hidden style="--img: url('assets/hobbies/transit.webp')"></div>
             <div class="label"><span data-cs="Veřejná doprava" data-en="Public transit">Veřejná doprava</span></div>
           </li>
@@ -290,32 +308,32 @@
           <span lang="en" hidden>My best illustrations from the past two years.</span>
         </p>
         <ul class="drawings gallery media">
-          <li class="tall"><picture>
+          <li class="tall" tabindex="0"><picture>
               <source srcset="assets/drawings/permstie.avif" type="image/avif">
               <source srcset="assets/drawings/permstie.webp" type="image/webp">
               <img src="assets/drawings/permstie.jpg" alt="Obrázek">
           </picture></li>
-          <li><picture>
+          <li tabindex="0"><picture>
               <source srcset="assets/drawings/dreeda.avif" type="image/avif">
               <source srcset="assets/drawings/dreeda.webp" type="image/webp">
               <img src="assets/drawings/dreeda.jpg" alt="Obrázek">
           </picture></li>
-          <li class="wide"><picture>
+          <li class="wide" tabindex="0"><picture>
               <source srcset="assets/drawings/train.avif" type="image/avif">
               <source srcset="assets/drawings/train.webp" type="image/webp">
               <img src="assets/drawings/train.jpg" alt="Obrázek">
           </picture></li>
-          <li><picture>
+          <li tabindex="0"><picture>
             <source srcset="assets/drawings/steam.avif" type="image/avif">
             <source srcset="assets/drawings/steam.webp" type="image/webp">
             <img src="assets/drawings/steam.jpg" alt="Obrázek">
           </picture></li>
-          <li class="wide"><picture>
+          <li class="wide" tabindex="0"><picture>
               <source srcset="assets/drawings/wonder.avif" type="image/avif">
               <source srcset="assets/drawings/wonder.webp" type="image/webp">
               <img src="assets/drawings/wonder.jpg" alt="Obrázek">
           </picture></li>
-          <li class="wide"><picture>
+          <li class="wide" tabindex="0"><picture>
               <source srcset="assets/drawings/frieze.avif" type="image/avif">
               <source srcset="assets/drawings/frieze.webp" type="image/webp">
               <img src="assets/drawings/frieze.jpg" alt="Obrázek">
@@ -326,7 +344,7 @@
       <article id="showcase-games">
         <h3 data-cs="Hry" data-en="Games">Hry</h3>
         <p>
-          <span lang="cs">Tady je pár mých nejoblíbenějších her, na jejichž tvorbě jsem se podílel. Všechny byly vytvořeny během jen pár dní s <a href="https://chocobois.github.io/">týmem kamarádů</a>. Všechny hry si můžete vyzkoušet přímo v prohlížeči, protože je děláme v TypeScriptu pomocí frameworku <a href="https://phaser.io/">Phaser</a>.</span>
+          <span lang="cs">Tady je pár mých nejoblíbenějších her, na jejichž tvorbě jsem se podílel. Všechny byly vytvořeny během jen pár dní s <a href="https://chocobois.github.io/">týmem kamarádů</a>. Všechny hry si můžete vyzkoušet přímo v prohlížeči, protože je děláme v TypeScriptu pomocí frameworku <a href="https://phaser.io/" lang="en" class="force-lang">Phaser</a>.</span>
           <span lang="en" hidden>Here are some of my favorite games that I&nbsp;helped create. All of them were made within just a few days with a <a href="https://chocobois.github.io/">team of friends</a>. You can try all of them directly in your browser since we code them in TypeScript using the <a href="https://phaser.io/">Phaser</a> framework.</span>
         </p>
         <aside class="implementation-note">
@@ -514,49 +532,49 @@
 
   <aside id="mobile-nav" aria-expanded="false">
     <div id="mobile-nav-behind" onclick="mobileMenu(false)"></div>
-    <nav role="navigation">
+    <nav>
       <ol>
         <li><h5>Odkazy</h5></li>
         <li onclick="mobileMenu(false)"><a href="#home">
-          <i class="icon" data-icon="home">⌂</i>
+          <i class="icon" aria-hidden="true" data-icon="home">⌂</i>
           <span data-cs="Domů" data-en="Home">Domů</span>
         </a></li>
         <li onclick="mobileMenu(false)"><a href="#about">
-          <i class="icon" data-icon="info">ⓘ</i>
+          <i class="icon" aria-hidden="true" data-icon="info">ⓘ</i>
           <span data-cs="O mě" data-en="About">O mě</span>
         </a></li>
         <li onclick="mobileMenu(false)"><a href="#about-hobbies">
-          <i class="icon" data-icon="interests">⛶</i>
+          <i class="icon" aria-hidden="true" data-icon="interests">⛶</i>
           <span data-cs="Koníčky" data-en="Hobbies">Koníčky</span>
         </a></li>
         <!-- <li onclick="mobileMenu(false)"><a href="#showcase">
           <span data-cs="Ukázky" data-en="Showcase">Ukázky</span>
         </a></li> -->
         <li onclick="mobileMenu(false)"><a href="#showcase-art">
-          <i class="icon" data-icon="palette">🎨</i>
+          <i class="icon" aria-hidden="true" data-icon="palette">🎨</i>
           <span data-cs="Obrázky" data-en="Artwork">Obrázky</span>
         </a></li>
         <li onclick="mobileMenu(false)"><a href="#showcase-games">
-          <i class="icon" data-icon="videogame_asset">🎮</i>
+          <i class="icon" aria-hidden="true" data-icon="videogame_asset">🎮</i>
           <span data-cs="Hry" data-en="Games">Hry</span>
         </a></li>
         <li onclick="mobileMenu(false)"><a href="#showcase-music">
-          <i class="icon" data-icon="genres">𝅘𝅥𝅮</i>
+          <i class="icon" aria-hidden="true" data-icon="genres">&sung;</i>
           <span data-cs="Hudba" data-en="Music">Hudba</span>
         </a></li>
         <li onclick="mobileMenu(false)"><a href="#showcase-music">
-          <i class="icon" data-icon="contract">📃</i>
+          <i class="icon" aria-hidden="true" data-icon="contract">📃</i>
           <span data-cs="Zdroje" data-en="Sources">Zdroje</span>
         </a></li>
         <li><hr></li>
         <li><h5>Nastavení</h5></li>
         <li class="setting" onclick="switchLanguage(), this.classList.toggle('toggled')">
-          <i class="icon" data-icon="language">🌐</i>
+          <i class="icon" aria-hidden="true" data-icon="language">🌐</i>
           <span lang="cs">Změnit jazyk</span>
           <span lang="en">Change language</span>
         </li>
         <li class="setting" onclick="switchTheme()">
-          <i class="icon" data-icon="dark_mode" data-theme-icon>🌓</i>
+          <i class="icon" aria-hidden="true" data-icon="dark_mode" data-theme-icon>🌓</i>
           <span lang="cs">Barevné schéma</span>
           <span lang="en">Toggle theme</span>
         </li>
@@ -576,6 +594,7 @@
     <audio src="assets/sounds/tap.wav" data-sound="tap" preload data-volume="0.4"></audio>
     <audio src="assets/sounds/zoomin.wav" data-sound="zoomin" preload data-volume="0.6"></audio>
     <audio src="assets/sounds/zoomout.wav" data-sound="zoomout" preload data-volume="0.6"></audio>
+    <audio src="assets/sounds/bounce.wav" data-sound="bounce" preload data-volume="0.6"></audio>
     <slot id="extra-audio"></slot>
   </slot>
 
