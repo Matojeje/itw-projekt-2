@@ -1,0 +1,21 @@
+:root {
+  color-scheme: dark;
+  --accent: #56d888;
+  --accent2: #f5d95d;
+  --page: #171a1e;
+  --card: #2a2f38;
+  --line: #525a68;
+  --text: #fffc;
+  --link: #32c5d3;
+  --hover: #fff3;
+  --select: #39da;
+  --shadow: #000e;
+}
+
+svg.handwriting g { stroke: white; }
+
+svg.darkmode-invert:not(.handwriting) g { stroke: white !important; }
+
+:not(svg).darkmode-invert { filter: invert(1) hue-rotate(180deg) }
+
+.thumb, .media { filter: brightness(85%) saturate(95%) }

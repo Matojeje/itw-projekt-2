@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<!-- ITW projekt 2 - main page script -->
+<!-- Matouš Dřízhal xdrizh00 -->
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maty</title>
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="light.css" media="(prefers-color-scheme: light)">
+  <link rel="stylesheet" href="dark.css" media="(prefers-color-scheme: dark)">
+  <style id="critical-css">
+    .sr-only {
+      position: absolute;
+      top: 0%; left: 0%;
+      width: 1px; height: 1px;
+      overflow: hidden;
+      opacity: 0;
+      pointer-events: none;
+      user-select: none;
+    }
+    slot,
+    html[lang=cs] *[lang=en],
+    html[lang=en] *[lang=cs]
+    { display: none !important; }
+  </style>
+
+  <!-- Material Symbols icon font with variable FILL axis -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0" id="iconFont" onload="this.dataset.loaded = true">
+
+  <!-- Browser hints -->
+  <link rel="preconnect" href="https://chocobois.github.io">
+
+  <!-- Scripts -->
+  <script src="index.js"></script>
+</head>
+<body>
+
+  <header>
+    <div id="page-title">
+      <h1>
+        <a href="https://matojeje.github.io/itw-projekt-2">
+          <span>Matouš Dřízhal</span>
+          <img hidden id="title-svg" src="assets/title.svg" class="handwriting" alt="Matouš Dřízhal" data-inject>
+        </a>
+      </h1>
+      <aside class="social-links">
+        <ul>
+          <li data-tagline-cs="na Bluesky" data-tagline-en="on Bluesky">
+            <a href="https://example.com/bluesky">
+              <img width="24" alt="Bluesky logo" src="https://cdn.simpleicons.org/bluesky?viewbox=auto">
+              <span>Bluesky</span>
+            </a>
+          </li>
+          <li data-tagline-cs="na Discordu" data-tagline-en="on Discord">
+            <a href="https://example.com/discord">
+              <img width="24" alt="Discord logo" src="https://cdn.simpleicons.org/discord?viewbox=auto">
+              <span>Discord</span>
+            </a>
+          </li>
+          <li data-tagline-cs="na Telegramu" data-tagline-en="on Telegram">
+            <a href="https://example.com/telegram">
+              <img width="24" alt="Telegram logo" src="https://cdn.simpleicons.org/telegram?viewbox=auto">
+              <span>Telegram</span>
+            </a>
+          </li>
+          <li data-tagline-cs="na YouTube" data-tagline-en="on YouTube">
+            <a href="https://example.com/youtube">
+              <img width="24" alt="YouTube logo" src="https://cdn.simpleicons.org/youtube?viewbox=auto">
+              <span>YouTube</span>
+            </a>
+          </li>
+          <li data-tagline-cs="na GitHubu" data-tagline-en="on GitHub">
+            <a href="https://example.com/github">
+              <img width="24" alt="GitHub logo" src="https://cdn.simpleicons.org/github?viewbox=auto" class="darkmode-invert">
+              <span>GitHub</span>
+            </a>
+          </li>
+        </ul>
+        <div class="social-tagline"></div>
+      </aside>
+    </div>
+    <nav role="navigation">
+      <ol>
+        <!-- <li><a href="#home">
+          <i class="icon" data-icon="home">⌂</i>
+          <span data-cs="Domů" data-en="Home">Domů</span>
+        </a></li> -->
+        <li><a href="#about"><div class="nav-icon">
+          <i class="icon" data-icon="info">ⓘ</i>
+          <span data-cs="O mě" data-en="About">O mě</span>
+        </div></a></li>
+        <!-- <li><a href="#about-hobbies">
+          <i class="icon" data-icon="interests">⛶</i>
+          <span data-cs="Koníčky" data-en="Hobbies">Koníčky</span>
+        </a></li> -->
+        <!-- <li><a href="#showcase">
+          <span data-cs="Ukázky" data-en="Showcase">Ukázky</span>
+        </a></li> -->
+        <li><a href="#showcase-art"><div class="nav-icon">
+          <i class="icon" data-icon="palette">🎨</i>
+          <span data-cs="Obrázky" data-en="Artwork">Obrázky</span>
+        </div></a></li>
+        <li><a href="#showcase-games"><div class="nav-icon">
+          <i class="icon" data-icon="videogame_asset">🎮</i>
+          <span data-cs="Hry" data-en="Games">Hry</span>
+        </div></a></li>
+        <li><a href="#showcase-music"><div class="nav-icon">
+          <i class="icon" data-icon="genres">𝅘𝅥𝅮</i>
+          <span data-cs="Hudba" data-en="Music">Hudba</span>
+        </div></a></li>
+      </ol>
+    </nav>
+    <form class="buttons">
+      <button
+        id="translate" type="button" data-translated-tooltip
+        data-tooltip-cs="Změnit jazyk" data-tooltip-en="Change language"
+        onclick="switchLanguage(), this.classList.toggle('toggled')"
+      >
+        <img data-inject id="language-globe" src="assets/language.svg" alt="🌐">
+        <img data-inject class="language-flag" lang="cs" alt="🇨🇿" src="assets/flag-czech-republic.svg">
+        <img data-inject class="language-flag" lang="en" alt="🇺🇸" src="assets/flag-united-states.svg" hidden>
+        <label for="translate" class="sr-only">
+          <span lang="cs">Změnit jazyk</span>
+          <span lang="en">Change language</span>
+        </label>
+      </button>
+      <button
+        id="theme" type="button" data-translated-tooltip
+        data-tooltip-cs="Barevné schéma" data-tooltip-en="Toggle theme"
+        onclick="switchTheme()"
+      >
+        <i class="icon" data-icon="dark_mode" data-theme-icon>🌓</i>
+        <label for="theme" class="sr-only">
+          <span lang="cs">Barevné schéma</span>
+          <span lang="en">Toggle theme</span>
+        </label>
+      </button>
+      <label
+        id="menu" for="menu-button" data-translated-tooltip
+        data-tooltip-cs="Mobilní nabídka" data-tooltip-en="Mobile menu"
+      >
+        <input id="menu-button" type="checkbox" class="sr-only" oninput="mobileMenu()">
+        <i class="icon" data-icon="menu">☰</i>
+        <span id="menu-label" class="sr-only"
+          data-cs="Mobilní nabídka" data-en="Mobile menu">Mobilní nabídka
+        </span>
+      </label>
+    </form>
+  </header>
+
+  <main class="side-pattern">
+    <section id="home" class="media">
+      <p class="short">
+        <strong data-cs="Ahoj!" data-en="Hi!">Ahoj!</strong>
+        <span lang="cs">Tohle je moje ukázková stránka pro účely projektu do předmětu <abbr title="Tvorba webových stránek" >ITW</abbr>. V praxi bych tyhle informace jen tak veřejně na internet nedával, ale o ničem jiném mě psát nenapadlo, tak proč si s tím trochu nevyhrát?<!-- Nechci být profesionální jako na životopise, jenom se představím jak to nejlépe umím.  Místo výplňového textu budu používat směs reálných informací a detailů ohledně implementace, čímž projekt vlastně dokumentuje sám sebe. --></span>
+        <span lang="en" hidden>This is an example webpage for the my project for the <abbr title="Web design">ITW</abbr> subject. Normally, I&nbsp;wouldn't put this sort of info out there on the web, but I&nbsp;couldn't think of anything else to write about, so why not have some fun?<!-- This isn't a résumé, so I'm not going to be formal about it, I'll just introduce myself the best way I&nbsp;know. --></span>
+      </p>
+      <noscript>
+        <p lang="cs" class="short">Vypadá to, že je vypnutý JavaScript. Stránka by víceméně pořád měla fungovat, ale bohužel přijde o pár interaktivních funkcí, a nebude vypadat přesně tak, jak jsem plánoval.</p>
+        <p lang="en" class="short">It looks like JavaScript is turned off. The page should more or less still work, but it'll sadly lack some interactivity and it won't look exactly as I&nbsp;planned.</p>
+      </noscript>
+    </section>
+
+    <section id="about">
+
+      <h2 data-cs="Něco málo o mě" data-en="A little bit about me">Něco málo o mě</h2>
+
+      <div class="col">
+        <article id="about-irl">
+
+          <picture class="avatar media">
+            <source media="(resolution < 1.5dppx)" srcset="assets/about/maty.avif" type="image/avif">
+            <source media="(resolution < 1.5dppx)" srcset="assets/about/maty.webp" type="image/webp">
+            <source media="(resolution >= 1.5dppx)" srcset="assets/about/maty-2x.webp" type="image/avif">
+            <source media="(resolution >= 1.5dppx)" srcset="assets/about/maty-2x.webp" type="image/webp">
+            <source media="(resolution >= 1.5dppx)" srcset="assets/about/maty-2x.jpg" type="image/jpeg">
+            <img src="assets/about/maty.jpg" alt="Matyho obličej">
+          </picture>
+
+          <h3 data-cs="V reálu" data-en="In real life">V reálu</h3>
+
+          <p>
+            <span lang="cs">Jsem z&nbsp;Olomouce a&nbsp;právě studuju bakalářský obor <a href="https://www.fit.vut.cz/applicants/degree-field/17673/.cs">Informační technologie</a> na <abbr title="Fakultě Informačních Technologií">FIT</abbr>&nbsp;<abbr title="Vysokého Učení Technického">VUT</abbr> v&nbsp;Brně. Předtím jsem chodil na <a href="https://spseol.cz/">elektro&shy;průmyslovku v Olomouci</a>, a&nbsp;obě dvě školy byly shodou náhod na ulici stejného jména (Božetěchova), byť každá v&nbsp;jiném městě.</span>
+            <!-- https://ell.stackexchange.com/a/100972 -->
+            <span lang="en" hidden>I'm from Olomouc and I'm an <a href="https://www.fit.vut.cz/applicants/degree-field/17673/.en">Information technology</a> undergraduate in <abbr title="the Faculty of Information Technology">FIT</abbr> at <abbr title="Brno University of Technology">BUT</abbr> in Brno. Before that, I&nbsp;attended a&nbsp;<a href="https://spseol.cz/">electrical engineering high school</a> in Olomouc, and funnily enough, both schools had the same street name (Božetěchova) despite being in different cities.</span>
+          </p>
+
+          <p>
+            <span lang="cs">Po Covidu jsem taky začal cestovat po Evropě, nejčastěji do Krakova, ale aspoň jednou ročně se podívám i&nbsp;do Německa nebo Švédska. Svůj menší zájem o&nbsp;veřejnou dopravu (ne, nejsem <span data-term="1">šotouš</span>) jsem si pak prohloubil tím, že jsem si na auto&shy;busovém nádraží sehnal teď už několika&shy;letou brigádu v&nbsp;informační kanceláři, kde pomáhám cestujícím najít dobré spoje a&nbsp;prodávám jízdenky. Raději jezdím vlakem, ale jako student si nadevše cením levných možností, a&nbsp;auto&shy;busy mě většinou vycházejí levněji. Do Brna dojíždím na každé cvičení.</span>
+            <span lang="en" hidden>After Covid, I&nbsp;also started travelling across Europe, mostly to Kraków, but I&nbsp;also try to visit Germany or Sweden at least once a year. I've developed my small interest in public transit (no, I'm not a <span data-term="1">railfan</span>) by getting a long-term part-time job at my city's bus terminal where I&nbsp;help passengers find good connections and sell tickets. I&nbsp;prefer taking the train when I&nbsp;can, but like any student, I'm most attracted by low prices, which usually goes to buses instead. I&nbsp;commute to Brno for every exercise and computer lab.</span>
+          </p>
+
+          <p>
+            <span lang="cs">Sportovec úplně nejsem, ale rád si zajedu na kole jen tak pro radost, třeba na Náklo nebo <a href="https://www.zmrzlina-starnov.cz/">na zmrzlinu do Štarnova</a>&nbsp;&ndash; placatá Haná je pro cyklistiku jako stvořená. Rád i&nbsp;chodím na procházky, abych měl od ostatních klid. Většinu času kdy jsem venku mám na sobě sluchátka, a&nbsp;poslouchám hudbu nebo <span data-term="2">podcasty</span>. Jinak se zajímám o programování, typografii, kartografii, lingvistiku, a&nbsp;do hudebky jsem chodil od školky až do konce střední.</span>
+            <span lang="en" hidden>I'm not one to exercise, but I&nbsp;like cycling around for leisure, like to visit the local quarry lake or <a href="https://www.zmrzlina-starnov.cz/">get some ice cream</a>&nbsp;&ndash; I&nbsp;live in a very flat region which is ideal for cycling. I&nbsp;also like taking walks to get a break from everyone else. Most of the time outside I'm wearing headphones so I&nbsp;can listen to music or <span data-term="2">podcasts</span>. Other than that, I'm interested in programming, typography, cartography, linguistics, and I've had piano lessons for over a decade.</span>
+          </p>
+        </article>
+
+        <article id="about-online">
+
+          <picture class="avatar media">
+            <source media="(resolution < 1.5dppx)" srcset="assets/about/mato.avif" type="image/avif">
+            <source media="(resolution < 1.5dppx)" srcset="assets/about/mato.webp" type="image/webp">
+            <source media="(resolution >= 1.5dppx)" srcset="assets/about/mato-2x.webp" type="image/avif">
+            <source media="(resolution >= 1.5dppx)" srcset="assets/about/mato-2x.webp" type="image/webp">
+            <source media="(resolution >= 1.5dppx)" srcset="assets/about/mato-2x.jpg" type="image/jpeg">
+            <img src="assets/about/mato.jpg" alt="Obrázek Riolu">
+          </picture>
+
+          <h3>Online</h3>
+
+          <p>
+            <span lang="cs">Na internetu se obvykle pohybuju v&nbsp;uměleckých kruzích, konkrétně pak mezi fanoušky různých her, proto jsem si jako svou webovou identitu vybral Pokémona jménem <a href="https://bulbapedia.bulbagarden.net/wiki/Riolu_(Pokémon)" class="riolu">Riolu</a>. Poslední dobou se spíše věnuju kreslení, ale mám mnohem víc zkušeností se tvorbou hudby, dělám remixy i&nbsp;vlastní skladby. Příklady z&nbsp;obou kategorií mám na ukázku níže.</span>
+            <span lang="en" hidden>I usually hang out in artist circles, specifically with people that like videogames, which is why I&nbsp;chose the Pokémon <a href="https://bulbapedia.bulbagarden.net/wiki/Riolu_(Pokémon)" class="riolu">Riolu</a> as my online identity. Lately I've been focusing more on drawing, but I&nbsp;have a lot more experience with music creation, I&nbsp;compose my own songs and make remixes too. Examples of both these art forms are available below.</span>
+          </p>
+
+          <p>
+            <span lang="cs">Mimo to taky čas od času nahrávám videa na YouTube, zkouším si 3D modelování, a&nbsp;s&nbsp;kamarády z Discordu se společně účastníme v&nbsp;<span data-term="3">Game Jamech</span>, kde mám většinou na starost sound&shy;track a&nbsp;výpomoc s&nbsp;programováním. Samozřejmě hry nejen vytvářím, ale i&nbsp;hraju, ale poslední dobou ne tak často. Mám nejradši nenáročné <span data-term="4">indie</span> hry, Nintendo hry a&nbsp;hudební/rytmické hry včetně arkádových. Jinak rád přispívám do open-source projektů: do <a href="https://www.openstreetmap.org/about">Open&shy;Street&shy;Map</a>, <a href="https://cs.wikipedia.org/wiki/Nápověda:Úvod">Wikipedie</a> a&nbsp;něco málo na <a href="https://docs.github.com/en/get-started/exploring-projects-on-github/finding-ways-to-contribute-to-open-source-on-github">GitHubu</a>.</span>
+            <span lang="en" hidden>Besides that, I&nbsp;sometimes make YouTube videos, try out 3D modelling, and participate in <span data-term="3">Game Jams</span> together with my friends from Discord, where I'm usually responsible for making the sound&shy;track and help with some of the coding. Of course, I&nbsp;don't just make games, I&nbsp;play them too, but not as often as I&nbsp;used to. My go-tos are <span data-term="4">indie</span> games, Nintendo games and music/rhythm games, even the arcade ones. Other than that, I&nbsp;like contributing to open-source projects: <a href="https://www.openstreetmap.org/about">Open&shy;Street&shy;Map</a>, <a href="https://en.wikipedia.org/wiki/Help:Getting_started">Wikipedia</a> and a bit of <a href="https://docs.github.com/en/get-started/exploring-projects-on-github/finding-ways-to-contribute-to-open-source-on-github">GitHub</a>.</span>
+          </p>
+
+          <p>
+            <span lang="cs">Nerad se na internetu prezentuju svým jménem a&nbsp;tváří, takže si udržuju pořádný odstup od sociálních sítí typu Facebook a&nbsp;Instagram. Online totiž dělám hodně různých věcí, a&nbsp;jsem rád, že nemusím u&nbsp;všeho přemýšlet, jestli chci, aby to třeba můj rodič nebo budoucí zaměstnavatel mohl jednodušše najít.</span>
+            <span lang="en" hidden>I don't like presenting myself with my real name and likeness online, so I&nbsp;keep my distance from sites like Facebook and Instagram. That's because I&nbsp;do a wide range of things online, and I&nbsp;like the peace of mind knowing that my parent or a future employer can't just easily find everything I&nbsp;do by searching for my name.</span>
+          </p>
+
+        </article>
+      </div>
+
+      <aside class="implementation-note">
+        <h5 data-cs="Poznámka k implementaci" data-en="Implementation note">Poznámka k implementaci</h5>
+        <p>
+          <span lang="cs">Na tuhle stránku jsem sice <em>dal</em> tlačítka sítí, které opravdu používám (jsou v&nbsp;hlavičce pod nadpisem), ale nikam neodkazují. Myslím, že sdílení kontaktů je mimo rozsah projektu&nbsp;:)</span>
+        <span lang="en" hidden>I <em>did</em> put some social buttons from sites I&nbsp;actually use (they're in the header under the title), but they don't link to anywhere. I&nbsp;figured sharing my socials was outside the scope of this project&nbsp;:)</span>
+        </p>
+      </aside>
+
+      <article id="about-hobbies">
+        <h3 data-cs="Moje koníčky" data-en="My hobbies">Moje koníčky</h3>
+
+        <ul class="hobbies media gallery">
+          <li class="hobby">
+            <div class="parallax" aria-hidden style="--img: url('assets/hobbies/fitvut.webp')"></div>
+            <div class="label"><span data-cs="Informatika" data-en="Computer science">Informatika</span></div>
+          </li>
+          <li class="hobby">
+            <div class="parallax" aria-hidden style="--img: url('assets/hobbies/music.webp')"></div>
+            <div class="label"><span data-cs="Hudba" data-en="Music">Hudba</span></div>
+          </li>
+          <li class="hobby">
+            <div class="parallax" aria-hidden style="--img: url('assets/hobbies/cycling.webp')"></div>
+            <div class="label"><span data-cs="Cyklistika" data-en="Cycling">Cyklistika</span></div>
+          </li>
+          <li class="hobby">
+            <div class="parallax" aria-hidden style="--img: url('assets/hobbies/electro.webp')"></div>
+            <div class="label"><span data-cs="Bastlení" data-en="Circuits">Bastlení</span></div>
+          </li>
+          <li class="hobby">
+            <div class="parallax" aria-hidden style="--img: url('assets/hobbies/carto.webp')"></div>
+            <div class="label"><span data-cs="Kartografie" data-en="Cartography">Kartografie</span></div>
+          </li>
+          <li class="hobby">
+            <div class="parallax" aria-hidden style="--img: url('assets/hobbies/walks.webp')"></div>
+            <div class="label"><span data-cs="Turistika" data-en="Tourism">Turistika</span></div>
+          </li>
+          <li class="hobby">
+            <div class="parallax" aria-hidden style="--img: url('assets/hobbies/travel.webp')"></div>
+            <div class="label"><span data-cs="Cestování" data-en="Travel">Cestování</span></div>
+          </li>
+          <li class="hobby">
+            <div class="parallax" aria-hidden style="--img: url('assets/hobbies/transit.webp')"></div>
+            <div class="label"><span data-cs="Veřejná doprava" data-en="Public transit">Veřejná doprava</span></div>
+          </li>
+        </ul>
+      </article>
+
+    </section>
+
+    <section id="showcase">
+      <h2 data-cs="Ukázky" data-en="Showcase">Ukázky</h2>
+
+      <article id="showcase-art">
+        <h3 data-cs="Obrázky" data-en="Artwork">Obrázky</h3>
+        <p>
+          <span lang="cs">Moje nejpovedenější ilustrace za poslední dva roky.</span>
+          <span lang="en" hidden>My best illustrations from the past two years.</span>
+        </p>
+        <ul class="drawings gallery media">
+          <li class="tall"><picture>
+              <source srcset="assets/drawings/permstie.avif" type="image/avif">
+              <source srcset="assets/drawings/permstie.webp" type="image/webp">
+              <img src="assets/drawings/permstie.jpg" alt="Obrázek">
+          </picture></li>
+          <li><picture>
+              <source srcset="assets/drawings/dreeda.avif" type="image/avif">
+              <source srcset="assets/drawings/dreeda.webp" type="image/webp">
+              <img src="assets/drawings/dreeda.jpg" alt="Obrázek">
+          </picture></li>
+          <li class="wide"><picture>
+              <source srcset="assets/drawings/train.avif" type="image/avif">
+              <source srcset="assets/drawings/train.webp" type="image/webp">
+              <img src="assets/drawings/train.jpg" alt="Obrázek">
+          </picture></li>
+          <li><picture>
+            <source srcset="assets/drawings/steam.avif" type="image/avif">
+            <source srcset="assets/drawings/steam.webp" type="image/webp">
+            <img src="assets/drawings/steam.jpg" alt="Obrázek">
+          </picture></li>
+          <li class="wide"><picture>
+              <source srcset="assets/drawings/wonder.avif" type="image/avif">
+              <source srcset="assets/drawings/wonder.webp" type="image/webp">
+              <img src="assets/drawings/wonder.jpg" alt="Obrázek">
+          </picture></li>
+          <li class="wide"><picture>
+              <source srcset="assets/drawings/frieze.avif" type="image/avif">
+              <source srcset="assets/drawings/frieze.webp" type="image/webp">
+              <img src="assets/drawings/frieze.jpg" alt="Obrázek">
+          </picture></li>
+        </ul>
+      </article>
+
+      <article id="showcase-games">
+        <h3 data-cs="Hry" data-en="Games">Hry</h3>
+        <p>
+          <span lang="cs">Tady je pár mých nejoblíbenějších her, na jejichž tvorbě jsem se podílel. Všechny byly vytvořeny během jen pár dní s <a href="https://chocobois.github.io/">týmem kamarádů</a>. Všechny hry si můžete vyzkoušet přímo v prohlížeči, protože je děláme v TypeScriptu pomocí frameworku <a href="https://phaser.io/">Phaser</a>.</span>
+          <span lang="en" hidden>Here are some of my favorite games that I&nbsp;helped create. All of them were made within just a few days with a <a href="https://chocobois.github.io/">team of friends</a>. You can try all of them directly in your browser since we code them in TypeScript using the <a href="https://phaser.io/">Phaser</a> framework.</span>
+        </p>
+        <aside class="implementation-note">
+          <h5 data-cs="Poznámka k implementaci" data-en="Implementation note">Poznámka k implementaci</h5>
+          <span lang="cs">Pro náhledové obrázky tady používám HTML5 <code>&lt;picture&gt;</code> prvky s několika typy (PNG, WebP, AVIF) a rozlišeními. Zkuste si otevřít inspektor síťových požadavků a přiblížit stránku!</span>
+          <span lang="en" hidden>I'm using the HTML5 <code>&lt;picture&gt;</code> elements with multiple filetypes (PNG, WebP, AVIF) and resolutions for the thumbnails here. Try opening the network inspector and zooming in!</span>
+        </aside>
+
+        <ul class="games gallery">
+
+          <li class="game" style="--primary: #8e413d;">
+            <h4 class="name">Fire and Dice</h4>
+            <span class="genre">tower defense</span>
+            <picture class="thumb">
+              <!-- https://caniuse.com/css-media-range-syntax -->
+              <source media="(resolution < 1.5dppx)" srcset="assets/games/fireanddice-thumb.avif" type="image/avif">
+              <source media="(resolution < 1.5dppx)" srcset="assets/games/fireanddice-thumb.webp" type="image/webp">
+              <source media="(resolution >= 1.5dppx)" srcset="https://chocobois.github.io/games/fire-and-dice/fireanddice-thumb.png">
+              <img src="assets/games/fireanddice-thumb.png" alt="Náhledový obrázek hry Fire and Dice">
+            </picture>
+            <p class="blurb short">
+              <span lang="cs">Hrajete za draka, který se brání před vesničany. Každé kolo se nepřátelé pomalu sunou vpřed. Dostanete hrací kostky, které můžete do herního pole položit pro ublížení nepřátel. Barva kostky určuje její efekt, jehož účinnost zase určuje hozené číslo.</span>
+              <span lang="en" hidden>You play as a dragon trying to defend himself from village folk, who slowly nudge towards you with every round. You get dice to place into the field to hurt your enemies. Every dice color has a different effect, and the rolled number decides its power.</span>
+            </p>
+          </li>
+
+          <li class="game" style="--primary: #059669;">
+            <h4 class="name">Rerooted</h4>
+            <span class="genre">rougelite</span>
+            <picture class="thumb">
+              <source media="(resolution < 1.5x)" srcset="assets/games/rerooted-thumb.avif" type="image/avif">
+              <source media="(resolution < 1.5x)" srcset="assets/games/rerooted-thumb.webp" type="image/webp">
+              <source media="(resolution >= 1.5x)" srcset="https://chocobois.github.io/games/rerooted/rerooted-thumb.png">
+              <img src="assets/games/rerooted-thumb.png" alt="Náhledový obrázek hry Rerooted">
+            </picture>
+            <p class="blurb short">
+              <span lang="cs">Tahem myší rozrůstáte kořeny stromku, který pod zemí hledá živiny a&nbsp;obchází překážky. Čím delší kořen, tím víc energie to stojí. Nasbírané suroviny se promění v&nbsp;plody, které se po sklizni prodají za vylepšení do dalšího kola, kde se roste od začátku.</span>
+              <span lang="en" hidden>Guide your tree roots through the soil to gather nutrients and avoid through obstacles. Each root segment costs more energy the deeper it goes. Sell your harvest and upgrade your tree's abilities after each turn, then you can grow from scratch again with new soil.</span>
+            </p>
+          </li>
+
+          <li class="game" style="--primary: #363960;">
+            <h4 class="name">Twilight Wings</h4>
+            <span class="genre">bullet hell</span>
+            <picture class="thumb">
+              <source media="(resolution < 1.5x)" srcset="assets/games/twilightwings-thumb.avif" type="image/avif">
+              <source media="(resolution < 1.5x)" srcset="assets/games/twilightwings-thumb.webp" type="image/webp">
+              <source media="(resolution >= 1.5x)" srcset="https://chocobois.github.io/games/twilight-wings/twilightwings-thumb.png">
+              <img src="assets/games/twilightwings-thumb.png" alt="Náhledový obrázek hry Twilight Wings">
+            </picture>
+            <p class="blurb short">
+              <span lang="cs">Skrolovací střílečka, ve které jde přepínat mezi denní a noční formou, což určuje, která barva kulek (vašich i&nbsp;nepřátelských) je aktivní. Protivník je proti jedné barvě slabší, ale ta má zase těžší vlny útoků. Je i&nbsp;možnost zpomalení času pro lepší manévrování.</span>
+              <span lang="en" hidden>A vertical shoot-'em-up inspired by Ikaruga where you can switch between day and night, toggling the active bullet color. The enemy is weaker to one of the colors, but makes up for it with harder bullet patterns. There's also a slow-mo feature for accessibility.</span>
+            </p>
+          </li>
+
+          <li class="game" style="--primary: #DD4B3E;">
+            <h4 class="name">Scale Salon</h4>
+            <span class="genre">tycoon</span>
+            <picture class="thumb">
+              <source media="(max-resolution: 2x)" srcset="assets/games/scale-thumb.avif" type="image/avif">
+              <source media="(max-resolution: 2x)" srcset="assets/games/scale-thumb.webp" type="image/webp">
+              <source media="(min-resolution: 2x)" srcset="https://chocobois.github.io/games/scale-salon/scale-thumb.png">
+              <img src="assets/games/scale-thumb.png" alt="Náhledový obrázek hry Scale Salon">
+            </picture>
+            <p class="blurb short">
+              <span lang="cs">Máte na starosti kosmetický salon pro šupinatá stvoření. Během provozu strategicky přidělujete zaměstnance i&nbsp;zákazníky na správná stanoviště, každý má jiné požadavky i&nbsp;trpělivost. Po zavíračce lze rozšiřovat podnik a&nbsp;najímat nové pomocníky.</span>
+              <span lang="en" hidden>You're in charge of a beauty salon for scaly creatures. Assign employees and customers to various stations, and keep everyone happy before they lose patience. Between shifts, hire new staff and expand your salon to handle even more scaly clientele.</span>
+            </p>
+          </li>
+
+        </ul>
+      </article>
+
+
+      <article id="showcase-music">
+
+        <h3 data-cs="Hudba" data-en="Music">Hudba</h3>
+
+        <p>
+          <span lang="cs">Něco málo k&nbsp;poslechu! Pár skladeb je originální tvorba, ostatní jsou zase cover verze a&nbsp;remixy jiných skladeb.</span>
+          <span lang="en" hidden>A little something to listen to! A couple of tracks are originals, and some are cover versions and remixes of other tracks.</span>
+        </p>
+
+        <ul class="tracks gallery">
+          <li class="media"><picture>
+            <source srcset="assets/drawings/keyboard.avif" type="image/avif">
+            <source srcset="assets/drawings/keyboard.webp" type="image/webp">
+            <img src="assets/drawings/keyboard.png" alt="Mato hraje na klávesy">
+          </picture></li>
+          <li>
+            <iframe loading="lazy" class="embed-bandcamp" aria-label='Skladba "Royal business" ze soundtracku hry "Himegotchi"' src="https://bandcamp.com/EmbeddedPlayer/album=1201463587/size=large/bgcol=333333/linkcol=4ec5ec/tracklist=false/artwork=small/transparent=true/"></iframe> <!-- <a href="https://m-a-t-o.bandcamp.com/album/himegotchi-original-soundtrack">Himegotchi Original Soundtrack by Mato</a> -->
+          </li>
+          <li>
+            <iframe loading="lazy" class="embed-bandcamp" aria-label='Skladba "Easygoing" z alba "First impression"' src="https://bandcamp.com/EmbeddedPlayer/album=18510384/size=large/bgcol=333333/linkcol=4ec5ec/tracklist=false/artwork=small/transparent=true/"></iframe> <!-- <a href="https://m-a-t-o.bandcamp.com/album/first-impression">First impression by Mato</a> -->
+          </li>
+          <li>
+            <iframe loading="lazy" class="embed-bandcamp" aria-label="Vložené album obsahující remixy ostatních skladeb" src="https://bandcamp.com/EmbeddedPlayer/album=3796967631/size=large/bgcol=333333/linkcol=4ec5ec/tracklist=false/artwork=small/transparent=true/"></iframe> <!-- <a href="https://m-a-t-o.bandcamp.com/album/covers-and-remixes">Covers and Remixes by Mato</a> -->
+          </li>
+        </ul>
+
+        <template>
+        <p>
+          <span lang="cs">Mimo <em>skládání</em> hudby taky někdy trénuju <em>přepis</em> písní do notové osnovy v&nbsp;programu MuseScore:</span>
+          <span lang="en" hidden>Besides music <em>composition</em>, I&nbsp;sometimes practice music <em>transcription</em> into sheet music in MuseScore:</span>
+        </p>
+        <ul class="scores gallery">
+          <li>
+            <iframe loading="lazy" class="embed-musescore" aria-label="Notový zápis: Last Dinosaurs - Sense" src="https://musescore.com/user/39149344/scores/21905632/embed" style="border: 0" allowfullscreen allow="autoplay; fullscreen"></iframe> <!-- <a href="https://musescore.com/user/39149344/scores/21905632">Notový zápis: Last Dinosaurs - Sense</a> -->
+          </li>
+          <li>
+            <iframe loading="lazy" class="embed-musescore" aria-label="Notový zápis: Marek Eben - O zlaté rybce" src="https://musescore.com/user/39149344/scores/7461596/embed" style="border: 0" allowfullscreen allow="autoplay; fullscreen"></iframe> <!-- <a href="https://musescore.com/user/39149344/scores/7461596">Notový zápis: Marek Eben - O&nbsp;zlaté rybce</a> -->
+          </li>
+        </ul>
+        </template>
+
+        <aside class="implementation-note">
+          <h5 data-cs="Poznámka k implementaci" data-en="Implementation note">Poznámka k implementaci</h5>
+          <span lang="cs">Nerad používám <code>&lt;iframe&gt;</code> prvky, ale jinak by bylo těžké se vejít do limitu velikosti projektu (5 MB). Kdyby to byl vážně problém, tak zkusím najít nějaký způsob přímého hostingu zvukových souborů a vytvořím vlastní design přehrávače, podobně jako video přehrávač v prvním projektu. <strong>Dejte mi prosím vědět.</strong></span>
+          <span lang="en" hidden>I'm not very fond of using <code>&lt;iframe&gt;</code>s here, but my project would hardly fit the filesize limit (5 MB) otherwise. If this is a big problem, I'll try to set up some direct hosting for audio files and design my own audio player, just like I&nbsp;did for the video player in the first project. <strong>Please let me know.</strong></span>
+        </aside>
+
+      </article>
+
+    </section>
+
+    <section id="dictionary">
+      <h2>Vysvětlivky pojmů</h2>
+      <dl>
+        <dt data-term="1" data-cs="šotouš" data-en="railfan">šotouš</dt>
+        <dd data-term="1" lang="cs">hanlivé označení pro nadšenece do železnice nebo veřejné dopravy, často spojené s její fotografií a účastí v klubech nebo spojených událostech.</dd>
+        <dd data-term="1" lang="en">one who enjoys railways, trainspotting or public transit in general, often connected to other hobbies such as photography and attending related clubs.</dd>
+
+        <dt data-term="2">podcast</dt>
+        <dd data-term="2" lang="cs">druh internetového radiového pořadu, často vlastního vydání, který ale většinou nebývá vysílaný živě. Šíří se decentralizovaně na bázi <a href="https://cs.wikipedia.org/wiki/RSS">RSS</a>.</dd>
+        <dd data-term="2" lang="en">a kind of internet radio show, often self-published, which tends to not be broadcast live. It's distributed in a decentralized way based on <a href="https://en.wikipedia.org/wiki/RSS">RSS</a>.</dd>
+
+        <dt data-term="3">game jam</dt>
+        <dd data-term="3" lang="cs">krátkodobá událost, kdy jednotlivci nebo týmy tvoří hru na dané téma <!-- (odhaleného až na začátku časového limitu) --> a/nebo s určitými limitacemi<!-- (např. velikost souboru nebo použití určitého programu) -->. Po skončení časového limitu se odevzdané hry hodnotí. Mezi nejznámější game jamy patří <a href="https://ldjam.com/">Ludum Dare</a> a <a href="https://gmtk.itch.io/">GMTK Game Jam</a>.</dd>
+        <dd data-term="3" lang="en">a short-term event in which an individual or a team create a game from scratch based on a theme <!-- (revealed at the start of the submission period) --> and/or with specific limitations<!-- (such as a filesize limit or having to use a specific application) -->. After the submission period ends, the games are rated. The most famous game jams are <a href="https://ldjam.com/">Ludum Dare</a> and the <a href="https://gmtk.itch.io/">GMTK Game Jam</a>.</dd>
+
+        <dt data-term="4">indie</dt>
+        <dd data-term="4" lang="cs">nezávisle publikovaná tvorba<!-- , nevázaná na zájmy firem nebo vlády -->. Pojem se používá pro různá média, ať jde o hudbu, filmy, literaturu nebo software.</dd>
+        <dd data-term="4" lang="en">independently published media<!--  not influenced by government or corporate interests -->. The term is used for various art forms, whether it's music, movies, literature or software.</dd>
+      </dl>
+    </section>
+  </main>
+
+  <footer>
+    <article id="sources">
+      <h2 data-cs="Zdroje" data-en="Sources">Zdroje</h2>
+
+      <ul>
+        <li>
+          <a href="https://github.com/google/material-design-icons">Material Symbols</a>
+          (<a href="http://www.apache.org/licenses/LICENSE-2.0.txt">Apache-2.0 <span data-cs="licence" data-en="license">licence</span></a>)
+        </li>
+        <li>
+          <a href="https://emojitwo.github.io/">Emojitwo</a>
+          (<a href="https://creativecommons.org/licenses/by/4.0/legalcode">CC-BY 4.0</a>)
+        </li>
+        <li>
+          <span data-cs="Herní grafiku vytvořili" data-en="Game artwork by">Herní grafiku vytvořili</span>
+          <a href="https://luxxart.carrd.co/">LuxxArt</a>,
+          <a href="https://x.com/NightLightLumie">Lumie</a>,
+          <a href="https://kisopad.carrd.co/">Kisopad</a>
+          <span data-cs="a" data-en="and">a</span>
+          <a href="https://x.com/SoulsongRocs">Soulsong</a>
+        </li>
+        <li>
+          <span lang="cs">Zvuky jsou buď vlastní tvorby nebo pochází z konzolí</span>
+          <span lang="en">Sounds are either self-made or ripped from</span>
+          <a href="https://www.nintendo.com/en-gb/Hardware/Nintendo-History/Wii/Wii-636022.html">Nintendo Wii</a>
+          <span data-cs="a" data-en="and">a</span>
+          <a lang="cs" href="https://www.mojenintendo.cz/nintendo-3ds/popis-systemu-2/">3DS</a>
+          <a lang="en" href="https://www.nintendo.com/en-gb/Hardware/Nintendo-History/Nintendo-3DS/Nintendo-3DS-636017.html">3DS</a>
+        </li>
+        <li>
+          Pokémon &copy; 1995&ndash;<span class="year">2025</span> Nintendo/Creatures Inc./GAME FREAK inc.
+        </li>
+      </ul>
+
+    </article>
+  </footer>
+
+  <aside id="mobile-nav" aria-expanded="false">
+    <div id="mobile-nav-behind" onclick="mobileMenu(false)"></div>
+    <nav role="navigation">
+      <ol>
+        <li onclick="mobileMenu(false)"><a href="#home">
+          <i class="icon" data-icon="home">⌂</i>
+          <span data-cs="Domů" data-en="Home">Domů</span>
+        </a></li>
+        <li onclick="mobileMenu(false)"><a href="#about">
+          <i class="icon" data-icon="info">ⓘ</i>
+          <span data-cs="O mě" data-en="About">O mě</span>
+        </a></li>
+        <li onclick="mobileMenu(false)"><a href="#about-hobbies">
+          <i class="icon" data-icon="interests">⛶</i>
+          <span data-cs="Koníčky" data-en="Hobbies">Koníčky</span>
+        </a></li>
+        <!-- <li onclick="mobileMenu(false)"><a href="#showcase">
+          <span data-cs="Ukázky" data-en="Showcase">Ukázky</span>
+        </a></li> -->
+        <li onclick="mobileMenu(false)"><a href="#showcase-art">
+          <i class="icon" data-icon="palette">🎨</i>
+          <span data-cs="Obrázky" data-en="Artwork">Obrázky</span>
+        </a></li>
+        <li onclick="mobileMenu(false)"><a href="#showcase-games">
+          <i class="icon" data-icon="videogame_asset">🎮</i>
+          <span data-cs="Hry" data-en="Games">Hry</span>
+        </a></li>
+        <li onclick="mobileMenu(false)"><a href="#showcase-music">
+          <i class="icon" data-icon="genres">𝅘𝅥𝅮</i>
+          <span data-cs="Hudba" data-en="Music">Hudba</span>
+        </a></li>
+        <hr>
+        <li class="setting" onclick="switchLanguage(), this.classList.toggle('toggled')">
+          <i class="icon" data-icon="language">🌐</i>
+          <span lang="cs">Změnit jazyk</span>
+          <span lang="en">Change language</span>
+        </li>
+        <li class="setting" onclick="switchTheme()">
+          <i class="icon" data-icon="dark_mode" data-theme-icon>🌓</i>
+          <span lang="cs">Barevné schéma</span>
+          <span lang="en">Toggle theme</span>
+        </li>
+      </ol>
+    </nav>
+  </aside>
+
+  <slot id="sound-effects" hidden aria-hidden>
+    <audio src="assets/sounds/hover.wav" data-sound="hover" preload data-volume="0.3"></audio>
+    <audio src="assets/sounds/popup.wav" data-sound="popup" preload></audio>
+    <audio src="assets/sounds/press.wav" data-sound="press" preload></audio>
+    <audio src="assets/sounds/unpress.wav" data-sound="unpress" preload></audio>
+    <audio src="assets/sounds/tooltip.mp3" data-sound="tooltip" preload></audio>
+    <audio src="assets/sounds/squish1.mp3" data-sound="squish1" preload></audio>
+    <audio src="assets/sounds/squish2.mp3" data-sound="squish2" preload></audio>
+    <audio src="assets/sounds/nav.wav" data-sound="nav" preload data-volume="0.4"></audio>
+    <audio src="assets/sounds/tap.wav" data-sound="tap" preload data-volume="0.4"></audio>
+    <audio src="assets/sounds/zoomin.wav" data-sound="zoomin" preload data-volume="0.6"></audio>
+    <audio src="assets/sounds/zoomout.wav" data-sound="zoomout" preload data-volume="0.6"></audio>
+    <slot id="extra-audio"></slot>
+  </slot>
+
+  <!-- Note: the "defer" attribute runs the script *after* document parsing -->
+  <script src="js/language.js"></script>
+  <script src="js/injectsvg.js"></script>
+  <script src="js/sounds.js" defer></script>
+  <script src="js/darkmode.js" defer></script>
+  <script src="js/dictionary.js" defer></script>
+  <!-- <script src="js/scroll.js" defer></script> -->
+  <script src="js/tooltip.js" defer></script>
+  <script src="js/mobile.js" defer></script>
+
+</body>
+</html>
+
+<!--
+                                     ,
+              ,-.       _,---._ __  / \
+             /  )    .-'       `./ /   \
+            (  (   ,'            `/    /|
+             \  `-"             \'\   / |
+              `.              ,  \ \ /  |
+               /`.          ,'-`----Y   |
+              (            ;        |   '
+              |  ,-.    ,-'         |  /
+              |  | (   |        hjw | /
+              )  |  \  `.___________|/
+              `--'   `--'
+-->

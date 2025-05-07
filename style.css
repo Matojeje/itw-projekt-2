@@ -1,0 +1,1310 @@
+:root {
+  font-family:  var(--system-font);
+  accent-color: var(--accent);
+  background: var(--page);
+  color: var(--text);
+
+  text-underline-offset: 3px;
+  font-variation-settings: "FILL" 0;
+
+  --system-font: system-ui, sans-serif;
+  --back-blur: blur(5px);
+
+  --content-width: clamp(20rem, 85vw, 1200px);
+  --gutter: max(1rem, (100vw - var(--content-width)) / 2);
+
+  --paragraph-width: clamp(20rem, 60vw, 50rem); /* or 75ch */
+  --text-gutter: max(1rem, (100vw - var(--paragraph-width)) / 2);
+
+  --header-normal: 3rem;
+  --header-expanded: 7rem;
+  --header-difference: calc(var(--header-expanded) - var(--header-normal));
+
+  --anim-header: var(--anim-3);
+  --anim-theme: var(--anim-4);
+  --anim-sidebar: var(--anim-3);
+}
+
+@font-face {
+  font-family: "Matofont";
+  src: url("assets/Matofont17.woff2") format("woff2");
+}
+
+/* Layers are lower in priority than unlayered rules */
+
+@layer reset, global, theme;
+
+/* ========================================================================== */
+/* CSS reset / normalize                                                      */
+/* ========================================================================== */
+
+@layer reset {
+  *, *::before, *::after { box-sizing: border-box }
+  input, button, textarea, select { font: inherit }
+  h1, h2, h3, h4, h5, h6, p { overflow-wrap: break-word }
+  h1, h2, h3, h4, h5, h6, blockquote { text-wrap: balance }
+  h1, h2, h3, h4, h5, h6, summary, ul, ol, li { margin-block: 0 }
+  date, time, output, ol li::marker { font-variant-numeric: tabular-nums }
+  summary :is(h1, h2, h3, h4, h5, h6) { display: initial }
+  img:not([src],[srcset]) { visibility: hidden }
+  html, body { padding: 0; margin: 0 }
+  ul, ol { padding-inline-start: 0 }
+  iframe { border: none }
+  pre, code, samp, output { font-size: inherit }
+  button, input, select { font: inherit }
+  picture img { width: inherit; height: inherit }
+  p { line-height: 1.5 }
+}
+
+/* ========================================================================== */
+/* Some global element/class styles                                           */
+/* ========================================================================== */
+
+@layer global {
+  ::selection {
+    background: var(--select);
+    color: var(--page);
+  }
+
+  svg ::selection {
+    color: transparent !important;
+  }
+
+  a, :link, :visited {
+    text-decoration: none;
+  }
+
+  abbr, [data-term] {
+    cursor: help;
+    text-decoration: 1px dotted underline;
+  }
+
+  .icon {
+    width: 1em;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizelegibility;
+    user-select: none;
+  }
+
+  p.short {
+    text-wrap: balance;
+  }
+
+  .column-span {
+    column-span: all;
+  }
+
+  article {
+    clear: both;
+  }
+
+  /* Tooltips */
+
+  [data-tooltip], [data-translated-tooltip] {
+    position: relative;
+
+    /* Hack: don't linebreak tooltipped elements */
+    /* (coding the viewport fitting was too hard) */
+    white-space: nowrap;
+
+    &::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      z-index: 99;
+
+      top: 120%;
+      width: max-content;
+      max-width: min(55ch, 95vw);
+      /* Centered by default */
+      left: 50%;
+      translate: -50% 0;
+
+      /* Reset */
+      font-family: var(--system-font);
+      font-size: 1rem;
+      text-shadow: none;
+      color: var(--text);
+
+      text-wrap: pretty;
+      text-align: center;
+      white-space: wrap;
+
+      pointer-events: none;
+      user-select: none;
+
+      background: color-mix(in srgb, var(--card) 60%, transparent);
+      backdrop-filter: var(--back-blur);
+
+      border: 2px solid var(--line);
+      border-radius: 1rem;
+      padding: .5rem 1rem;
+
+      visibility: hidden;
+      opacity: 0;
+      transform: scale(0.95) translateY(5%);
+      filter: blur(2px);
+
+      transition-property:
+        display, visibility, opacity, transform, filter,
+        border, background-color, color;
+      transition-duration:
+        var(--anim-3), var(--anim-3), var(--anim-3), var(--anim-3), var(--anim-3),
+        var(--anim-theme), var(--anim-theme), var(--anim-theme);
+      transition-delay:
+        var(--anim-1), var(--anim-1), var(--anim-1), var(--anim-1), var(--anim-1),
+        var(--anim-theme), var(--anim-theme), var(--anim-theme);
+      transition-behavior: allow-discrete;
+    }
+
+    &:hover::after {
+      display: block;
+      visibility: visible;
+      opacity: 1;
+      transform: none;
+      filter: none;
+      transition-delay: 0s;
+    }
+
+    /* Viewport overflow classes (set through JS) */
+
+    &.tooltip-snap-right::after {
+      left: auto; right: 0;
+      translate: var(--tooltip-nudge, 0) 0;
+    }
+
+    &.tooltip-snap-left::after {
+      left: 0;
+      translate: var(--tooltip-nudge, 0) 0;
+    }
+
+  }
+
+  header :is([data-tooltip],[data-translated-tooltip])::after {
+    /* Workaround for two stacked backdrop blurs,
+     * for more info why this happens see:
+     * https://stackoverflow.com/a/79597313/11933690 */
+    background: var(--card);
+  }
+
+  /* External links */
+
+  main :is(section, article) a[href^="http"] {
+    &::after{
+      content: "open_in_new";
+      display: inline-block;
+      max-width: 1em;
+
+      translate: 0 10%;
+      margin-inline-start: 0.15em;
+
+      font: normal normal 0.87em "Material Symbols Outlined";
+      letter-spacing: normal;
+      text-transform: none;
+      text-wrap: nowrap;
+      white-space: nowrap;
+
+      opacity: 50%;
+      transform-origin: bottom left;
+      transition: var(--ease-0);
+    }
+    &:hover::after {
+      opacity: 1;
+    }
+  }
+
+  /* Notes */
+
+  .implementation-note {
+    border-left: 3px solid var(--accent);
+    background-color: var(--card);
+    margin-block: 1.5rem;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    font-size: 95%;
+
+    max-width: min(65ch, var(--paragraph-width));
+    margin-inline: auto;
+
+    & h5 {
+      margin-bottom: 0.5rem;
+      color: var(--accent);
+    }
+
+    & p {
+      margin: 0;
+    }
+
+    /* Peeking Riolu */
+
+    &:not(.no-riolu) {
+      position: relative;
+      pointer-events: none;
+      z-index: unset;
+
+      & * {
+        pointer-events: all;
+      }
+
+      &::after, &::before {
+        content: "";
+        display: block;
+        position: absolute;
+        cursor: pointer;
+        pointer-events: all;
+
+        top: 0; right: 0;
+        transform:
+          translate(50%, -50%)
+          scale(40%)
+          translateX(-6rem);
+
+        width: 256px;
+        height: 256px;
+        background: url("assets/peek.png") no-repeat;
+
+        transform:
+          translate(50%, -50%)
+          scale(40%)
+          translateX(-6rem);
+
+        transition:
+          transform var(--anim-2) cubic-bezier(.3, 3, .7, 1);
+      }
+
+      &::after {
+        z-index: 1;
+        background-position-x: -512px; /* Paws */
+        clip-path: inset(45% 25% 35% 25%);
+      }
+
+      &::before {
+        z-index: -1;
+        background-position-x: 0px; /* :) */
+        background-position-y: 102px; /* hidden */
+        clip-path: inset(0 20% 50% 20%);
+
+        transition:
+          transform var(--anim-2) cubic-bezier(.3, 3, .7, 1),
+          background-position-y var(--anim-3) cubic-bezier(0, .55, .45, 1);
+      }
+
+      /* On hover (excluding child elements) */
+
+      &:not(:has(:hover)):hover {
+        &::before {
+          background-position-y: 0px; /* peeking */
+        }
+        &::after {
+          clip-path: inset(0 20% 35% 20%);
+        }
+      }
+
+      /* On click (excluding child elements) */
+      /* (the .squish class is a Firefox fallback) */
+
+      &:not(:has(:active)):active, &.squish {
+        &::before {
+          background-position-x: -256px; /* :o */
+        }
+        &::after, &::before {
+          transform:
+            translate(50%, -50%)
+            scale(40%)
+            translateX(-6rem)
+            scale(110%, 90%);
+        }
+      }
+
+      /*
+       * Those last 2 selectors look pretty complicated,
+       * combined with the `pointer-events` values, they
+       * work to only target pseudo-element states.
+       * I'm pretty proud of coming up with that!
+       */
+    }
+  }
+
+  .riolu {
+    cursor: url("assets/riolu.png") 4 4, auto;
+  }
+}
+
+/* ========================================================================== */
+/* Main page styles                                                           */
+/* ========================================================================== */
+
+/* I'm using a lot of nesting here, for better editor collapsing  */
+
+html, body {
+  height: 100%;
+  overflow-y: auto; /* For sticky to work */
+  overflow-x: hidden; /* Because of nav tooltips and mobile sidebar */
+  scroll-behavior: smooth;
+}
+
+body * {
+  scroll-margin-top: calc(var(--header-normal) + .5rem);
+}
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+
+  width: 100%;
+  height: var(--header-normal);
+  padding-inline: var(--gutter);
+
+  display: flex;
+  align-items: center;
+  gap: clamp(.5rem, 2dvw, 3rem);
+
+  backdrop-filter: var(--back-blur);
+  background-color: color-mix(in srgb, var(--page) 80%, transparent);
+  transition:
+    height var(--anim-3) ease-out,
+    color var(--anim-theme),
+    background-color var(--anim-theme);
+
+  /* Header logo */
+
+  & > #page-title {
+    height: var(--header-expanded);
+    align-self: start;
+
+    display: flex;
+    flex-direction: column;
+
+    /* Title */
+
+    & > h1 {
+      display: flex;
+      align-items: center;
+      transition:
+        height ease-out var(--anim-header),
+        translate ease-out var(--anim-header);
+
+      & > a { display: contents }
+
+      & #title-svg {
+        height: clamp(65%, 4vw, 80%);
+        transition: height ease-out var(--anim-header);
+      }
+
+      & span {
+        /* This should hopefully never show up */
+        color: var(--text);
+        font-weight: normal;
+      }
+    }
+
+    /* Socials */
+
+    & .social-links {
+      display: flex;
+      gap: 1rem;
+
+      user-select: none;
+      overflow-y: hidden;
+
+      transition: height ease-out var(--anim-header);
+
+      /* Icons */
+
+      & ul {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        gap: 0 .5rem;
+        transition: translate ease-out var(--anim-header);
+      }
+
+      & li {
+        width: 1.5rem;
+        height: 1.5rem;
+        list-style: none;
+        transition: var(--ease-2);
+      }
+
+      & a { vertical-align: middle }
+      & img { width: 100% }
+      & ul span { display: none }
+
+      /* Text */
+
+      & .social-tagline {
+        /* font-style: italic; */
+        transform: translateY(25%);
+        font-family: Matofont;
+        font-size-adjust: 0.6;
+      }
+    }
+  }
+
+  /* Navbar desktop */
+  & > nav {
+    flex-grow: 1;
+    height: 100%;
+
+    & ol {
+      display: flex;
+      justify-content: end;
+      gap: clamp(1rem, 2dvw, 2.5rem);
+      height: 100%;
+    }
+
+    & li {
+      height: 100%;
+      list-style: none;
+
+      &:hover { font-variation-settings: "FILL" 1; }
+
+      & .nav-icon, .nav-icon * {
+        transition:
+          gap var(--anim-3) ease-out,
+          translate var(--anim-3) ease-out,
+          font-variation-settings var(--anim-2) ease !important;
+      }
+
+      & a {
+        height: 100%;
+        display: block;
+      }
+
+      & .nav-icon {
+        height: 100%;
+        display: flex;
+        place-items: center;
+        gap: var(--icon-gap);
+
+        --icon-size: clamp(1rem, 1.7dvw, 1.5rem);
+        --icon-gap: 0.5rem;
+
+        & .icon {
+          font-size: var(--icon-size);
+        }
+      }
+    }
+
+    & a, :link, :visited {
+      height: 100%;
+      color: currentcolor;
+    }
+
+    & span {
+      white-space: nowrap;
+    }
+  }
+
+  /* Header buttons */
+  & > .buttons {
+    display: flex;
+    gap: .5rem;
+
+    & > * {
+      font-size: 1.5rem;
+      padding: .2em;
+      border-radius: 100%;
+      cursor: pointer;
+
+      opacity: 80%;
+      background-color: transparent;
+      transition: background-color var(--anim-1) ease-out;
+
+      /* Reset browser style */
+      appearance: none;
+      background: none;
+      border: none;
+      display: grid;
+      place-items: center;
+
+      &:hover {
+        opacity: 1;
+        background-color: var(--hover);
+      }
+
+      &:active > * {
+        opacity: 90%;
+        translate: 0 1px;
+        filter: brightness(80%) contrast(80%);
+      }
+
+      & > * {
+        width: inherit;
+        height: inherit;
+        font-size: inherit !important;
+      }
+
+      /* Translate button */
+
+      &#translate {
+        grid-template: "icon" 100% / 100%;
+
+        & > * {
+          grid-area: icon;
+          width: 1em;
+          height: 1em;
+          transform-origin: 50%;
+          user-select: none;
+          transition:
+            opacity var(--anim-3) ease-out,
+            rotate var(--anim-3),
+            filter var(--anim-1) !important;
+        }
+
+        & svg, svg path:not([fill]) {
+          fill: currentcolor;
+        }
+
+        & > #language-globe { z-index: 1 }
+        & > .language-flag { z-index: 2 }
+
+        /* Normal state */
+        &:not(:hover) {
+          & > #language-globe { opacity: 1; rotate: 0deg }
+          & > .language-flag { opacity: 0; rotate: -45deg }
+        }
+
+        /* Hover state */
+        &:hover {
+          & > #language-globe { opacity: 0; rotate: 45deg }
+          & > .language-flag { opacity: 1; rotate: 0deg }
+        }
+      }
+    }
+  }
+
+  /* Expanded state */
+  &.top {
+    height: var(--header-expanded);
+
+    & #title-svg {
+      height: clamp(60%, 4vw, 70%) !important;
+    }
+
+    & h1 {
+      height: var(--header-difference);
+      translate: 0 .5rem;
+    }
+
+    & .social-links {
+      height: var(--header-normal);
+    }
+
+    & aside > * {
+      translate: 0 -.5rem;
+    }
+
+    & .nav-icon {
+      translate: 50% 0;
+      --icon-gap: 0px;
+      & .icon { translate: -50% -50% }
+      & span { translate: calc(-50% - var(--icon-size) - var(--icon-gap)) 50% }
+    }
+  }
+
+  /* Sticky state */
+  &:not(.top) {
+    border-bottom: 1px solid var(--line);
+    box-shadow: 0 0 .2em var(--shadow);
+
+    & .social-links {
+      height: 0;
+    }
+
+    & h1 {
+      height: var(--header-normal);
+    }
+  }
+
+}
+
+body:has(>header.top) {
+  /* & * {
+    scroll-margin-top: var(--header-expanded);
+  } */
+  & main {
+    padding-top: 0;
+  }
+}
+
+body > :is(main, footer) :is(a, :link, :visited) {
+  text-decoration: none;
+  color: var(--link);
+  &:hover {
+    text-decoration: 1px solid underline;
+    color: var(--accent);
+  }
+}
+
+main {
+  overflow-x: hidden;
+  padding-top: var(--header-difference);
+  transition:
+    padding var(--anim-header) ease-out;
+
+  & h2 {
+    font-family: Matofont;
+    font-size-adjust: 0.6;
+    font-weight: normal;
+    font-size: 1.8em;
+  }
+
+  & section {
+    padding-block: 2rem;
+
+    & article {
+      padding-block: 1rem;
+    }
+
+    & > p, > article > p {
+      max-width: var(--paragraph-width);
+      text-align: justify;
+    }
+
+    & > :is(h2, h3, h4) {
+      padding-inline: var(--gutter);
+    }
+
+    & h2 {
+      text-align: center;
+      margin-bottom: 1em;
+    }
+
+    & .gallery {
+      margin-block: 2rem;
+    }
+
+  }
+}
+
+section#home {
+  color: white;
+  background:
+    radial-gradient(circle at center, transparent, #0007),
+    url("assets/code.png") repeat fixed;
+
+  --shadow: #034;
+  text-shadow:
+    0 0 8px var(--shadow),
+    0 0 10px var(--shadow),
+    0 0 12px var(--shadow),
+    0 0 14px var(--shadow),
+    0 0 16px var(--shadow);
+  overflow: hidden;
+
+  & > * {
+    margin-inline: auto;
+    text-align: center;
+    filter:
+      drop-shadow(0px 0px 0.8rem var(--shadow))
+      drop-shadow(0px 0px 1.2rem var(--shadow));
+  }
+}
+
+.side-pattern {
+  position: relative;
+
+  &::before, &::after {
+    position: absolute;
+    display: block;
+    content: "";
+    inset: 0;
+    z-index: -1;
+    --offset: calc(var(--content-width) + var(--gutter) + 2em);
+
+    background: url("assets/rrrainbow.svg") repeat;
+    background-size: 50vmin;
+  }
+
+  &::before { left: var(--offset); mask-image: linear-gradient(to left, black, transparent) }
+  &::after { right: var(--offset); mask-image: linear-gradient(to right, black, transparent) }
+}
+
+section#about {
+  padding-inline: var(--gutter);
+
+  & p { text-align: justify }
+
+  & .col {
+    columns: auto 55ch;
+    column-rule: 2px solid var(--line);
+    column-gap: 4rem;
+    & > * {
+      max-width: var(--paragraph-width);
+      break-inside: avoid;
+      margin-inline: auto;
+    }
+  }
+
+  /* Avatars */
+
+  & .avatar, .avatar * {
+    border-radius: 50%;
+    width: clamp(4rem, 12vw, 7rem);
+    margin-block: -1.5ch 1ch;
+    shape-outside: circle(50% at center 25%);
+    --edge: calc(1rem - 5vw);
+  }
+
+  & .avatar:hover {
+    animation: bounce linear infinite var(--anim-4);
+  }
+
+  & #about-irl .avatar {
+    float: left;
+    margin-inline: var(--edge) 3rem;
+  }
+
+  & #about-online .avatar {
+    float: right;
+    margin-inline: 3rem var(--edge);
+  }
+
+  /* Hobbies */
+
+  & article#about-hobbies {
+    & > h3 {
+      text-align: center;
+    }
+
+    & ul, li { list-style: none }
+
+    & ul {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+      gap: 1.5rem;
+    }
+
+    & .hobby {
+      display: grid;
+      grid-template: "item" 100% / 100%;
+      & > * { grid-area: item; }
+
+      width: 100%;
+      height: auto;
+      aspect-ratio: var(--ar);
+
+      --ar: 10/7;
+      --anim-hover: var(--anim-3);
+
+      overflow: hidden; /* Blur filter leaking */
+      border-radius: 1rem;
+      background-color: var(--card);
+
+      & > .parallax {
+        --zoom: 115%;
+        background-image: var(--img);
+        transition:
+          background-size ease-out var(--anim-hover),
+          filter ease-out var(--anim-hover),
+          scale ease-out var(--anim-hover);
+
+        /* Firefox fallback */
+        background-position-y: center;
+      }
+
+      & > .label {
+        isolation: isolate; /* To prevent parallax blur glitches */
+
+        display: grid;
+        place-items: center;
+
+        color: white;
+        font-size: 1.15rem;
+        font-weight: 600;
+        white-space: nowrap;
+        text-shadow: 0px 1px .5em black;
+
+        margin-top: auto;
+        margin-inline: auto;
+        padding-inline: 1em;
+        border-radius: 1em 1em 0 0;
+        pointer-events: none;
+
+        scale: 1;
+        width: 85%;
+        height: 20%;
+        background-color: #0006;
+        backdrop-filter: var(--back-blur);
+
+        transition:
+          all ease-out var(--anim-hover);
+
+      }
+
+      &:hover {
+        cursor: zoom-in;
+
+        & > .parallax {
+          --zoom: 105%;
+          filter: blur(.5rem) brightness(80%);
+          scale: 103%;
+        }
+        & > .label {
+          scale: 110%;
+          width: 100%;
+          height: 100%;
+          backdrop-filter: none;
+          background-color: transparent;
+        }
+      }
+
+      &:active {
+        cursor: zoom-out;
+
+        & > .parallax {
+          --zoom: 100%;
+          filter: none;
+          scale: 100%;
+        }
+        & > .label {
+          opacity: 0;
+        }
+      }
+    }
+  }
+}
+
+section#showcase {
+  padding-inline: var(--gutter);
+
+  & article {
+    & > h3, > p, > aside {
+      max-width: var(--paragraph-width);
+      margin-inline: auto;
+    }
+  }
+
+  & ul, li { list-style: none }
+
+  & .gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(var(--item-width, 15rem), 1fr));
+    gap: 2rem;
+  }
+
+  & .drawings picture, .drawings img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: .3rem;
+  }
+
+  & .drawings {
+    padding: 1rem;
+    border: 3px solid var(--card);
+    border-radius: .5rem;
+    grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+    grid-auto-rows: 12rem;
+    grid-auto-flow: dense;
+    gap: 1rem;
+
+    & .wide { grid-column: span 2 }
+    & .tall { grid-row: span 2 }
+
+    & > * {
+      border-radius: .3rem;
+      box-shadow: 0 1px 5px -2px var(--shadow);
+      transition: all var(--anim-3) ease-out;
+      &:hover {
+        scale: 104%;
+        filter: contrast(110%) saturate(102%);
+      }
+    }
+  }
+
+  & .games {
+    --item-width: 20rem;
+  }
+
+  & .game {
+    background-color: var(--card);
+    padding: 1rem;
+    border-radius: .5rem;
+
+    display: grid;
+    grid-template-areas: "name genre" "thumb thumb" "blurb blurb";
+    grid-template-columns: 1fr auto;
+    gap: 1rem;
+
+    & .name { grid-area: name }
+
+    & .blurb {
+      grid-area: blurb;
+      text-align: justify;
+    }
+
+    & .thumb {
+      grid-area: thumb;
+      display: block;
+      width: 100%;
+      & > * {
+        border-radius: 0.5rem;
+      }
+    }
+
+    & .genre {
+      grid-area: genre;
+      text-transform: capitalize;
+      font-size: small;
+      background-color: var(--accent2);
+      color: var(--page);
+      padding-inline: .7rem;
+      height: 1.5rem;
+      display: grid;
+      place-items: center;
+      border-radius: 2rem;
+      opacity: 70%;
+    }
+  }
+
+  .tracks {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding-top: 1rem;
+
+    position: relative;
+
+    & li:has(picture) {
+      position: absolute;
+      z-index: -1;
+      top: 0; bottom: 0; right: 0;
+
+      & picture, img {
+        height: 100%;
+      }
+    }
+
+    & li:not(:has(picture)) {
+      margin-right: 30%;
+      opacity: 85%;
+      height: 120px;
+    }
+  }
+
+  .embed-bandcamp {
+    width: min(100%, 700px);
+    height: 120px;
+  }
+
+  .embed-musescore {
+    aspect-ratio: 7/6;
+    width: min(100%, 700px);
+  }
+}
+
+footer {
+  background: var(--card);
+  & article#sources {
+    & h2 { margin-bottom: 1rem }
+    & li a:first-child { font-weight: bold }
+  }
+
+  padding-inline: var(--text-gutter);
+  padding-block: 2rem 4rem;
+}
+
+
+
+/* ========================================================================== */
+/* Device-specific media queries                                              */
+/* ========================================================================== */
+
+@media (width < 440px) {
+  .buttons > *:not(#menu) { display: none; visibility: hidden }
+}
+
+@media (width < 768px) {
+  header nav ol { display: none; visibility: hidden }
+}
+
+@media (width >= 768px) {
+  #menu { display: none; visibility: hidden }
+}
+
+@media (width > 1200px) {
+  .avatar { --edge: -1rem !important; }
+}
+
+/* Mobile navigation sidebar */
+
+#mobile-nav {
+  position: absolute;
+  z-index: 100; /* Above header and tooltips */
+  inset: 0px;
+
+  display: flex;
+  transition:
+    opacity var(--anim-sidebar),
+    max-width var(--anim-sidebar),
+    display var(--anim-sidebar),
+    visibility var(--anim-sidebar);
+  transition-behavior: allow-discrete;
+
+  --sidebar-width: min(85vw, 40ch);
+  max-width: 100vw;
+  opacity: 1;
+
+  /* Click to close area */
+
+  & #mobile-nav-behind {
+    pointer-events: all;
+    cursor: pointer;
+    flex: 1;
+
+    backdrop-filter: var(--back-blur) brightness(70%);
+  }
+
+  /* Sidebar */
+
+  & nav {
+    width: var(--sidebar-width);
+    padding-block: 1rem;
+    height: 100%;
+
+    color: var(--text);
+    background: var(--card);
+    border-left: 2px solid var(--line);
+    box-shadow: 0px 0px 1rem var(--shadow);
+
+    & ul, li { list-style: none }
+    & a, .setting {
+      color: unset;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    & li {
+      padding: .5rem 1rem;
+      cursor: pointer;
+
+      &:hover {
+        background-color: var(--hover);
+        font-variation-settings: "FILL" 1;
+      }
+
+      background-color: transparent;
+      transition: background-color var(--anim-3);
+    }
+
+    & hr {
+      border: none;
+      border-top: 2px solid var(--line);
+    }
+  }
+
+  /* Closed state */
+
+  &[aria-expanded="false"] {
+    display: none;
+    visiility: hidden;
+    max-width: calc(100vw + var(--sidebar-width));
+    opacity: 0;
+  }
+
+  /* Opened state */
+
+  /* &[aria-expanded="true"] {
+    animation: fadein var(--anim-sidebar);
+  } */
+
+}
+
+/* body.sidebar-opened > :is(header, main, footer) {
+  filter: blur(2px);
+} */
+
+/* ========================================================================== */
+/* Animations and other interactive things                                    */
+/* ========================================================================== */
+
+
+/* Animation durations */
+
+@media (prefers-reduced-motion: no-preference) {
+  :root {
+    --anim-5: 1.0s; --anim-4: 0.5s; --anim-3: 0.2s;
+    --anim-2: 0.1s; --anim-1: 80ms; --anim-0: 50ms;
+  }
+}
+
+@media (prefers-reduced-motion) {
+  :root {
+    --anim-5: 0s; --anim-4: 0s; --anim-3: 0s;
+    --anim-2: 0s; --anim-1: 0s; --anim-0: 0s;
+  }
+}
+
+/* Shorthand variables */
+
+:root {
+  --ease-5: all var(--anim-5) ease;
+  --ease-4: all var(--anim-4) ease;
+  --ease-3: all var(--anim-3) ease;
+  --ease-2: all var(--anim-2) ease;
+  --ease-1: all var(--anim-1) ease;
+  --ease-0: all var(--anim-0) ease;
+}
+
+/* Keyframes */
+
+@keyframes fadein {
+  from { opacity: 0 }
+  to   { opacity: 1 }
+}
+
+@keyframes fadeout {
+  from { opacity: 1 }
+  to   { opacity: 0 }
+}
+
+@keyframes tooltip {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(5%);
+    filter: blur(2px);
+  } to {
+    display: none;
+  }
+}
+
+@keyframes stretch {
+  from, to { transform: scaleX(1.00) }
+  50%      { transform: scaleX(1.01) }
+}
+
+@keyframes bounce {
+  from, to { transform: translateY( 0  ) }
+  20%, 80% { transform: translateY(-3px) }
+  30%, 70% { transform: translateY(-4px) }
+  50%      { transform: translateY(-5px) }
+}
+
+@keyframes wiggle {
+  from, to { rotate:  0deg }
+  25%      { rotate: -3deg }
+  75%      { rotate: +3deg }
+}
+
+/* https://css-tricks.com/svg-line-animation-works/ */
+
+@keyframes draw-svg {
+  to { stroke-dashoffset: 0 }
+}
+
+@keyframes redraw-svg {
+  from { stroke-dashoffset: 0 }
+}
+
+.flip-toggle { transition: transform var(--anim-3) ease-out }
+.flip-toggle.toggled { transform: rotateY(180deg) }
+.flip-toggle:not(.toggled) { transform: rotateY(0deg) }
+
+/* Material Symbol fill animation */
+
+.has-icon {
+  & .icon {
+    transition: font-variation-settings ease var(--anim-2);
+    /* font-variation-settings: "FILL" 0; */
+  }
+  &:hover .icon {
+    font-variation-settings: "FILL" 1;
+  }
+}
+
+/* Social button animations */
+
+.social-links ul:hover {
+  & li:hover {
+    scale: 110%;
+  }
+  & li:not(:hover) {
+    opacity: 40%;
+  }
+}
+
+/* Social tagline */
+
+.social-tagline {
+  opacity: 0;
+  transition: opacity var(--anim-4), translate ease-out var(--anim-header);
+  transition-delay: var(--anim-2), 0s;
+}
+
+.social-tagline.active {
+  opacity: 1;
+  transition-duration: var(--anim-2), var(--anim-header);
+  transition-delay: 0s, 0s;
+}
+
+/* Title logo animations */
+
+svg.handwriting g { transition:
+  stroke var(--anim-theme),
+  stroke-width var(--anim-3);
+}
+
+#title-svg {
+
+  /* Write out name on load */
+  & g path {
+    stroke-dasharray: 333;
+    stroke-dashoffset: 333;
+    animation: draw-svg var(--anim-4) linear forwards;
+    animation-delay: calc( var(--anim-2) * var(--order) );
+  }
+
+  /* Thinner line on hover */
+  &:hover g { stroke-width: 10 !important }
+}
+
+/* More animation on click */
+#title-svg:active g path,
+#page-title h1 a:has(#title-svg):is(:active, :focus, :focus-within)
+{
+  animation: redraw-svg var(--anim-5) infinite alternate both;
+  animation-delay: calc( var(--anim-1) * (15 - var(--order)) );
+}
+
+/* Parallax scrolling */
+
+@keyframes parallax-background-image {
+  from { background-position-y: bottom; }
+  to { background-position-y: top; }
+}
+
+body {
+  scroll-timeline-name: --parallax-container;
+}
+
+.parallax {
+  background-size: var(--zoom, 150%) calc(var(--zoom, 150%) * var(--ar, 1));
+  background-position-x: center;
+  animation-name: parallax-background-image;
+  animation-duration: 1ms;
+  animation-direction: alternate;
+  animation-timeline: --parallax-container;
+}
+
+/* ========================================================================== */
+/* Theme transitions                                                          */
+/* ========================================================================== */
+
+@layer theme {
+  .thumb, .media, .darkmode-invert {
+    transition: filter var(--anim-theme);
+  }
+
+  :root, body, html, footer,
+  .implementation-note,
+  #mobile-nav nav
+  {
+    transition:
+      color var(--anim-theme),
+      background-color var(--anim-theme),
+      border var(--anim-theme);
+  }
+}

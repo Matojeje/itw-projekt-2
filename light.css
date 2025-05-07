@@ -1,0 +1,15 @@
+:root {
+  color-scheme: light;
+  --accent: #0d9c4d;
+  --accent2: #a06d00;
+  --page: #fffcf9;
+  --card: #e6e8ed;
+  --line: #a6acb8;
+  --text: black;
+  --link: #0d909c;
+  --hover: #0002;
+  --select: #079a;
+  --shadow: #0008;
+}
+
+svg.handwriting g { stroke: black; }
