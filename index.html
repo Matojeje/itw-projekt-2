@@ -15,7 +15,7 @@
   <style id="critical-css">
     .sr-only {
       position: absolute;
-      top: 0%; left: 0%;
+      top: 0%; left: 150vw;
       width: 1px; height: 1px;
       overflow: hidden;
       opacity: 0;
@@ -184,9 +184,9 @@
           <h3 data-cs="V reálu" data-en="In real life">V reálu</h3>
 
           <p>
-            <span lang="cs">Jsem z&nbsp;Olomouce a&nbsp;právě studuju bakalářský obor <a href="https://www.fit.vut.cz/applicants/degree-field/17673/.cs">Informační technologie</a> na <abbr title="Fakultě Informačních Technologií">FIT</abbr>&nbsp;<abbr title="Vysokého Učení Technického">VUT</abbr> v&nbsp;Brně. Předtím jsem chodil na <a href="https://spseol.cz/">elektro&shy;průmyslovku v Olomouci</a>, a&nbsp;obě dvě školy byly shodou náhod na ulici stejného jména (Božetěchova), byť každá v&nbsp;jiném městě.</span>
+            <span lang="cs">Jsem z&nbsp;Olomouce a&nbsp;právě studuju bakalářský obor <a href="https://www.fit.vut.cz/applicants/degree-field/17673/.cs">Informační technologie</a> na <abbr title="Fakultě Informačních Technologií">FIT</abbr>&nbsp;<abbr title="Vysokého Učení Technického">VUT</abbr> v&nbsp;Brně. Předtím jsem chodil na <a href="https://spseol.cz/">elektro&shy;průmyslovku v Olomouci</a>, a&nbsp;obě dvě školy byly shodou náhod na ulici stejného jména (Bože&shy;těchova), byť každá v&nbsp;jiném městě.</span>
             <!-- https://ell.stackexchange.com/a/100972 -->
-            <span lang="en" hidden>I'm from Olomouc and I'm an <a href="https://www.fit.vut.cz/applicants/degree-field/17673/.en">Information technology</a> undergraduate in <abbr title="the Faculty of Information Technology">FIT</abbr> at <abbr title="Brno University of Technology">BUT</abbr> in Brno. Before that, I&nbsp;attended a&nbsp;<a href="https://spseol.cz/">electrical engineering high school</a> in Olomouc, and funnily enough, both schools had the same street name (Božetěchova) despite being in different cities.</span>
+            <span lang="en" hidden>I'm from Olomouc and I'm an <a href="https://www.fit.vut.cz/applicants/degree-field/17673/.en">Information technology</a> undergraduate in <abbr title="the Faculty of Information Technology">FIT</abbr> at <abbr title="Brno University of Technology">BUT</abbr> in Brno. Before that, I&nbsp;attended a&nbsp;<a href="https://spseol.cz/">electrical engineering high school</a> in Olomouc, and funnily enough, both schools had the same street name (Bože&shy;těchova) despite being in different cities.</span>
           </p>
 
           <p>
@@ -195,8 +195,8 @@
           </p>
 
           <p>
-            <span lang="cs">Sportovec úplně nejsem, ale rád si zajedu na kole jen tak pro radost, třeba na Náklo nebo <a href="https://www.zmrzlina-starnov.cz/">na zmrzlinu do Štarnova</a>&nbsp;&ndash; placatá Haná je pro cyklistiku jako stvořená. Rád i&nbsp;chodím na procházky, abych měl od ostatních klid. Většinu času kdy jsem venku mám na sobě sluchátka, a&nbsp;poslouchám hudbu nebo <span data-term="2">podcasty</span>. Jinak se zajímám o programování, typografii, kartografii, lingvistiku, a&nbsp;do hudebky jsem chodil od školky až do konce střední.</span>
-            <span lang="en" hidden>I'm not one to exercise, but I&nbsp;like cycling around for leisure, like to visit the local quarry lake or <a href="https://www.zmrzlina-starnov.cz/">get some ice cream</a>&nbsp;&ndash; I&nbsp;live in a very flat region which is ideal for cycling. I&nbsp;also like taking walks to get a break from everyone else. Most of the time outside I'm wearing headphones so I&nbsp;can listen to music or <span data-term="2">podcasts</span>. Other than that, I'm interested in programming, typography, cartography, linguistics, and I've had piano lessons for over a decade.</span>
+            <span lang="cs">Sportovec úplně nejsem, ale rád si zajedu na kole jen tak pro radost, třeba na Náklo nebo <a href="https://www.zmrzlina-starnov.cz/">na zmrzlinu do Štarnova</a>&nbsp;&ndash; placatá Haná je pro cyklistiku jako stvořená. Rád i&nbsp;chodím na procházky, abych měl od ostatních klid. Většinu času kdy jsem venku mám na sobě sluchátka, a&nbsp;poslouchám hudbu nebo <span data-term="2">podcasty</span>. Jinak se zajímám o programování, typo&shy;grafii, karto&shy;grafii, lingvistiku, a&nbsp;do hudebky jsem chodil od školky až do konce střední.</span>
+            <span lang="en" hidden>I'm not one to exercise, but I&nbsp;like cycling around for leisure, like to visit the local quarry lake or <a href="https://www.zmrzlina-starnov.cz/">get some ice cream</a>&nbsp;&ndash; I&nbsp;live in a very flat region which is ideal for cycling. I&nbsp;also like taking walks to get a break from everyone else. Most of the time outside I'm wearing headphones so I&nbsp;can listen to music or <span data-term="2">podcasts</span>. Other than that, I'm interested in programming, typo&shy;graphy, carto&shy;graphy, linguistics, and I've had piano lessons for over a decade.</span>
           </p>
         </article>
 
@@ -443,10 +443,10 @@
         </ul>
         </template>
 
-        <aside class="implementation-note">
+        <aside class="implementation-note no-riolu">
           <h5 data-cs="Poznámka k implementaci" data-en="Implementation note">Poznámka k implementaci</h5>
-          <span lang="cs">Nerad používám <code>&lt;iframe&gt;</code> prvky, ale jinak by bylo těžké se vejít do limitu velikosti projektu (5 MB). Kdyby to byl vážně problém, tak zkusím najít nějaký způsob přímého hostingu zvukových souborů a vytvořím vlastní design přehrávače, podobně jako video přehrávač v prvním projektu. <strong>Dejte mi prosím vědět.</strong></span>
-          <span lang="en" hidden>I'm not very fond of using <code>&lt;iframe&gt;</code>s here, but my project would hardly fit the filesize limit (5 MB) otherwise. If this is a big problem, I'll try to set up some direct hosting for audio files and design my own audio player, just like I&nbsp;did for the video player in the first project. <strong>Please let me know.</strong></span>
+          <span lang="cs">Nerad používám <code>&lt;iframe&gt;</code> prvky, ale jinak by bylo těžké se vejít do limitu velikosti projektu (5&nbsp;MB). Kdyby to byl vážně problém, tak zkusím najít nějaký způsob přímého hostingu zvukových souborů a vytvořím vlastní design přehrávače, podobně jako video přehrávač v prvním projektu. <strong>Dejte mi prosím vědět.</strong></span>
+          <span lang="en" hidden>I'm not very fond of using <code>&lt;iframe&gt;</code>s here, but my project would hardly fit the filesize limit (5&nbsp;MB) otherwise. If this is a big problem, I'll try to set up some direct hosting for audio files and design my own audio player, just like I&nbsp;did for the video player in the first project. <strong>Please let me know.</strong></span>
         </aside>
 
       </article>
