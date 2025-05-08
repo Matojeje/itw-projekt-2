@@ -39,8 +39,10 @@
     }
     slot,
     html[lang=cs] *[lang=en]:not(.force-lang),
-    html[lang=en] *[lang=cs]:not(.force-lang)
-    { display: none !important; }
+    html[lang=en] *[lang=cs]:not(.force-lang),
+    body.sensitive .not-sensitive,
+    body:not(.sensitive) .sensitive-only
+    { display: none !important; visibility: hidden !important; }
   </style>
 
   <!-- Material Symbols icon font with variable FILL axis -->
@@ -95,7 +97,7 @@
             </a>
           </li>
         </ul>
-        <div class="social-tagline"></div>
+        <div class="social-tagline"><!-- Dynamically set --></div>
       </aside>
     </div>
     <nav>
@@ -177,6 +179,10 @@
         <span lang="cs">Tohle je moje ukázková stránka pro účely projektu do předmětu <abbr title="Tvorba webových stránek" tabindex="0">ITW</abbr>. V praxi bych tyhle informace jen tak veřejně na internet nedával, ale o ničem jiném mě psát nenapadlo, tak proč si s tím trochu nevyhrát?<!-- Nechci být profesionální jako na životopise, jenom se představím jak to nejlépe umím.  Místo výplňového textu budu používat směs reálných informací a detailů ohledně implementace, čímž projekt vlastně dokumentuje sám sebe. --></span>
         <span lang="en" hidden>This is an example webpage for the my project for the <abbr title="Web design" tabindex="0">ITW</abbr> subject. Normally, I&nbsp;wouldn't put this sort of info out there on the web, but I&nbsp;couldn't think of anything else to write about, so why not have some fun?<!-- This isn't a résumé, so I'm not going to be formal about it, I'll just introduce myself the best way I&nbsp;know. --></span>
       </p>
+      <p class="short sensitive-only">
+        <span lang="cs">Mimochodem jsou schované některé moje osobní údaje.</span>
+        <span lang="en" hidden>By the way, I'm hiding some of my personal details.</span>
+      </p>
       <noscript>
         <p lang="cs" class="short">Vypadá to, že je vypnutý JavaScript. Stránka by víceméně pořád měla fungovat, ale bohužel přijde o pár interaktivních funkcí, a nebude vypadat přesně tak, jak jsem plánoval.</p>
         <p lang="en" class="short">It looks like JavaScript is turned off. The page should more or less still work, but it'll sadly lack some interactivity and it won't look exactly as I&nbsp;planned.</p>
@@ -196,20 +202,20 @@
             <source media="(resolution >= 1.5dppx)" srcset="assets/about/maty-2x.webp" type="image/avif">
             <source media="(resolution >= 1.5dppx)" srcset="assets/about/maty-2x.webp" type="image/webp">
             <source media="(resolution >= 1.5dppx)" srcset="assets/about/maty-2x.jpg" type="image/jpeg">
-            <img src="assets/about/maty.jpg" alt="Matyho obličej">
+            <img src="assets/about/maty.jpg" alt="Matyho obličej" class="personal-info">
           </picture>
 
           <h3 data-cs="V reálu" data-en="In real life">V reálu</h3>
 
           <p>
-            <span lang="cs">Jsem z&nbsp;Olomouce a&nbsp;právě studuju bakalářský obor <a href="https://www.fit.vut.cz/applicants/degree-field/17673/.cs">Informační technologie</a> na <abbr title="Fakultě Informačních Technologií" tabindex="0">FIT</abbr>&nbsp;<abbr title="Vysokého Učení Technického" tabindex="0">VUT</abbr> v&nbsp;Brně. Předtím jsem chodil na <a href="https://spseol.cz/">elektro&shy;průmyslovku v Olomouci</a>, a&nbsp;obě dvě školy byly shodou náhod na ulici stejného jména (Bože&shy;těchova), byť každá v&nbsp;jiném městě.</span>
+            <span lang="cs">Jsem z&nbsp;<span class="personal-info">Olomouce</span> a&nbsp;právě studuju bakalářský obor <a href="https://www.fit.vut.cz/applicants/degree-field/17673/.cs">Informační technologie</a> na <abbr title="Fakultě Informačních Technologií" tabindex="0">FIT</abbr>&nbsp;<abbr title="Vysokého Učení Technického" tabindex="0">VUT</abbr> v&nbsp;Brně. Předtím jsem chodil na <a href="https://spseol.cz/">elektro&shy;průmyslovku</a> v <span class="personal-info">Olomouci, a&nbsp;obě dvě školy byly shodou náhod na ulici stejného jména (Bože&shy;těchova), byť každá v&nbsp;jiném městě</span>.</span>
             <!-- https://ell.stackexchange.com/a/100972 -->
-            <span lang="en" hidden>I'm from Olomouc and I'm an <a href="https://www.fit.vut.cz/applicants/degree-field/17673/.en">Information technology</a> undergraduate in <abbr title="the Faculty of Information Technology" tabindex="0">FIT</abbr> at <abbr title="Brno University of Technology" tabindex="0">BUT</abbr> in Brno. Before that, I&nbsp;attended a&nbsp;<a href="https://spseol.cz/">electrical engineering high school</a> in Olomouc, and funnily enough, both schools had the same street name (Bože&shy;těchova) despite being in different cities.</span>
+            <span lang="en" hidden>I'm from <span class="personal-info">Olomouc</span> and I'm an <a href="https://www.fit.vut.cz/applicants/degree-field/17673/.en">Information technology</a> undergraduate in <abbr title="the Faculty of Information Technology" tabindex="0">FIT</abbr> at <abbr title="Brno University of Technology" tabindex="0">BUT</abbr> in Brno. Before that, I&nbsp;attended a&nbsp;<a href="https://spseol.cz/">electrical engineering high school</a> in <span class="personal-info">Olomouc, and funnily enough, both schools had the same street name (Bože&shy;těchova) despite being in different cities</span>.</span>
           </p>
 
           <p>
-            <span lang="cs">Po Covidu jsem taky začal cestovat po Evropě, nejčastěji do Krakova, ale aspoň jednou ročně se podívám i&nbsp;do Německa nebo Švédska. Svůj menší zájem o&nbsp;veřejnou dopravu (ne, nejsem <span data-term="1" role="term" tabindex="0">šotouš</span>) jsem si pak prohloubil tím, že jsem si na auto&shy;busovém nádraží sehnal teď už několika&shy;letou brigádu v&nbsp;informační kanceláři, kde pomáhám cestujícím najít dobré spoje a&nbsp;prodávám jízdenky. Raději jezdím vlakem, ale jako student si nadevše cením levných možností, a&nbsp;auto&shy;busy mě většinou vycházejí levněji. Do Brna dojíždím na každé cvičení.</span>
-            <span lang="en" hidden>After Covid, I&nbsp;also started travelling across Europe, mostly to Kraków, but I&nbsp;also try to visit Germany or Sweden at least once a year. I've developed my small interest in public transit (no, I'm not a <span data-term="1" role="term" tabindex="0">railfan</span>) by getting a long-term part-time job at my city's bus terminal where I&nbsp;help passengers find good connections and sell tickets. I&nbsp;prefer taking the train when I&nbsp;can, but like any student, I'm most attracted by low prices, which usually goes to buses instead. I&nbsp;commute to Brno for every exercise and computer lab.</span>
+            <span lang="cs">Po Covidu jsem taky začal cestovat po Evropě, nejčastěji do Krakova, ale aspoň jednou ročně se podívám i&nbsp;do Německa nebo Švédska. Svůj menší zájem o&nbsp;veřejnou dopravu (ne, nejsem <span data-term="1" role="term" tabindex="0">šotouš</span>) jsem si pak prohloubil tím, že <span class="personal-info">jsem si na auto&shy;busovém nádraží sehnal teď už několika&shy;letou brigádu v&nbsp;informační kanceláři, kde pomáhám cestujícím najít dobré spoje a&nbsp;prodávám jízdenky</span>. Raději jezdím vlakem, ale jako student si nadevše cením levných možností, a&nbsp;auto&shy;busy mě většinou vycházejí levněji. Do Brna dojíždím na každé cvičení.</span>
+            <span lang="en" hidden>After Covid, I&nbsp;also started travelling across Europe, mostly to Kraków, but I&nbsp;also try to visit Germany or Sweden at least once a year. I've developed my small interest in public transit (no, I'm not a <span data-term="1" role="term" tabindex="0">railfan</span>) by <span class="personal-info">getting a long-term part-time job at my city's bus terminal where I&nbsp;help passengers find good connections and sell tickets</span>. I&nbsp;prefer taking the train when I&nbsp;can, but like any student, I'm most attracted by low prices, which usually goes to buses instead. I&nbsp;commute to Brno for every exercise and computer lab.</span>
           </p>
 
           <p>
@@ -537,6 +543,13 @@
       </ul>
 
     </article>
+
+    <aside class="not-sensitive"><p>
+      <a href="index.html?matojumpscare">
+        <span lang="cs">Verze bez osobních údajů</span>
+        <span lang="en">Version without personal info</span>
+      </a>
+    </p></aside>
   </footer>
 
   <aside id="mobile-nav" aria-expanded="false">

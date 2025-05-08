@@ -98,6 +98,22 @@
     clear: both;
   }
 
+  /* "Hide" personal info */
+
+  body.sensitive {
+    & :not(p span).personal-info {
+      filter: url("assets/filters.svg#pixelate") !important;
+    }
+
+    & p span.personal-info {
+      word-break: break-all;
+      text-security: square;
+      -moz-text-security: square;
+      -webkit-text-security: square;
+      font-size: 1.5ex;
+    }
+  }
+
   /* Tooltips */
 
   [data-tooltip], [data-translated-tooltip] {

@@ -38,6 +38,11 @@ document.addEventListener("DOMContentLoaded", () => {
   document.body.addEventListener("scroll", checkScrollTop)
   checkScrollTop(undefined, document.body)
 
+  // "Hide" sensitive info based on URL query
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.has("matojumpscare"))
+    document.body.classList.add("sensitive")
+
   // Write current year where needed
   $all(".year").forEach(el => el.textContent = String(new Date().getFullYear()))
 
@@ -63,18 +68,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
   $all(".social-links li").forEach(link => {
     if (!taglineEl) return
+
     // The language script hasn't been loaded at this point,
     // but hopefully it'll already be loaded when these events happen
-    link.addEventListener("pointerenter", () => {
-      const lang = getCurrentLang()
-      const tagline = link.dataset["tagline" + capitalize(lang)] || link.closest("span")?.innerText
-      // Why I'm using textContent: https://stackoverflow.com/a/50406907/11933690
-      taglineEl.textContent = tagline || "???"
-      taglineEl.classList.add("active")
+
+    ;["pointerenter", "focusin"].forEach(event => {
+      link.addEventListener(event, () => {
+        const lang = getCurrentLang()
+        const tagline = link.dataset["tagline" + capitalize(lang)] || link.closest("span")?.innerText
+        // Why I'm using textContent: https://stackoverflow.com/a/50406907/11933690
+        taglineEl.textContent = tagline || "???"
+        taglineEl.classList.add("active")
+      })
     })
-    link.addEventListener("pointerleave", () => {
-      // Don't remove the text yet, for better debugging and animations
-      taglineEl.classList.remove("active")
+
+    ;["pointerleave", "focusout"].forEach(event => {
+      link.addEventListener(event, () => {
+        // Don't remove the text yet, for better debugging and animations
+        taglineEl.classList.remove("active")
+      })
     })
   })
 
