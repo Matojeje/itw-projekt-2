@@ -1043,8 +1043,14 @@ footer {
 
 @media (width < 768px) {
   header nav ol { display: none; visibility: hidden }
-  #showcase-music .tracks li:has(.embed-bandcamp) { margin: 0 }
-  #showcase-music .tracks li.media { display: none }
+  article#showcase-music .tracks li:has(.embed-bandcamp) { margin: 0 }
+  article#showcase-music .tracks li.media { display: none }
+  article#showcase-art .drawings {
+    grid-auto-rows: auto;
+    & li { aspect-ratio: 1 }
+    & .tall { grid-row: unset !important }
+    & .wide { grid-column: unset !important }
+  }
 }
 
 @media (width >= 768px) {
