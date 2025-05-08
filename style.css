@@ -931,7 +931,7 @@ section#showcase {
     grid-template-columns: 1fr auto;
     gap: 1rem;
 
-    & .name { grid-area: name }
+    & .name { grid-area: name; font-size: 120% }
     & .blurb { grid-area: blurb }
 
     & .thumb {
@@ -982,6 +982,7 @@ section#showcase {
       margin-right: min(30%);
       opacity: 85%;
       height: 120px;
+      backdrop-filter: var(--back-blur);
     }
   }
 
@@ -1028,9 +1029,10 @@ footer {
   article#showcase-games .games .game {
       display: grid;
       grid-template-areas: "thumb name genre" "thumb blurb blurb";
-      grid-template-columns: minmax(20vw, 5rem) auto 15ch;
-      grid-template-rows: auto auto;
+      grid-template-columns: auto auto 15ch;
+      grid-template-rows: minmax(auto, 2em) minmax(auto, auto);
       gap: .5lh 2rem;
+      & picture, .thumb, img { max-height: 7lh; width: auto }
   }
 }
 
