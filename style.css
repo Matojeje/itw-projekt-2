@@ -770,9 +770,9 @@ section#about {
 
     & ul, li { list-style: none }
 
-    & ul {
+    & .hobbies {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr) minmax(13rem, 1fr));
       gap: 1.5rem;
     }
 
@@ -982,11 +982,11 @@ section#showcase {
       margin-right: min(30%);
       opacity: 85%;
       height: 120px;
-      backdrop-filter: var(--back-blur);
     }
   }
 
   .embed-bandcamp {
+    backdrop-filter: var(--back-blur);
     background-color: var(--card);
     width: min(100%, 700px);
     height: 120px;
