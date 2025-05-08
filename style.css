@@ -948,6 +948,7 @@ section#showcase {
       grid-area: genre;
       text-transform: capitalize;
       font-size: small;
+      font-weight: 500;
       background-color: var(--accent2);
       color: var(--page);
       padding-inline: .7rem;
@@ -1314,7 +1315,8 @@ body {
 
   :root, body, html, footer,
   .implementation-note,
-  #mobile-nav nav
+  #mobile-nav nav,
+  .game, .genre
   {
     transition:
       color var(--anim-theme),
