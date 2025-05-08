@@ -86,6 +86,10 @@ document.addEventListener("DOMContentLoaded", () => {
     el.addEventListener("pointerup", e => {if (e.target == el) el.classList.remove("squish")})
   })
 
+  // Patch: in case the viewport scrolls to the side when clicking anchors
+
+  $all("nav a").forEach(a => a.addEventListener("click", () => document.body.scrollLeft = 0))
+
   console.groupEnd()
 })
 
@@ -103,9 +107,10 @@ function replaceTitle() {
 }
 
 /** Call this function after the Material icon font finshed loading */
-function removeFallbackIcons(polling=0) {
+function removeFallbackIcons(polling=0, filter=document) {
 
-  const icons = $all("i.icon")
+  /** @type {NodeListOf<HTMLElement>} */
+  const icons = filter.querySelectorAll("i.icon")
   if (icons.length == 0) {
     setTimeout(() => removeFallbackIcons(polling+1), 20)
     return

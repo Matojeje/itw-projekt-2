@@ -1,7 +1,11 @@
 // ITW projekt 2 - mobile menu
 // Matouš Dřízhal xdrizh00
 
+let mobileNavOpenCount = 0
+
 function mobileMenu(isOpen=true) {
+  document.body.scrollLeft = 0
+
   const menuContainer = document.getElementById("mobile-nav")
   if (!menuContainer) return
 
@@ -16,4 +20,8 @@ function mobileMenu(isOpen=true) {
   : menuButton.setAttribute("checked", "")
 
   playSFX(isOpen ? "zoomin" : "zoomout")
+
+  // Just in case the fallback icons persisted
+  if (isOpen) mobileNavOpenCount++
+  if (mobileNavOpenCount <= 1) removeFallbackIcons()
 }

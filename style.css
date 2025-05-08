@@ -114,7 +114,7 @@
 
       top: 120%;
       width: max-content;
-      max-width: min(55ch, 95vw);
+      max-width: min(55ch, 85vw);
       /* Centered by default */
       left: 50%;
       translate: -50% 0;
@@ -772,7 +772,7 @@ section#about {
 
     & .hobbies {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr) minmax(13rem, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
       gap: 1.5rem;
     }
 
@@ -1023,6 +1023,7 @@ footer {
 @media (width < 768px) {
   header nav ol { display: none; visibility: hidden }
   #showcase-music .tracks li:has(.embed-bandcamp) { margin: 0 }
+  #showcase-music .tracks li.media { display: none }
 }
 
 @media (width >= 768px) {
@@ -1039,6 +1040,12 @@ footer {
 
 @media (width > 1200px) {
   .avatar { --edge: -1rem !important; }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .avatar, .hobby, .drawings * {
+    pointer-events: none;
+  }
 }
 
 /* Mobile navigation sidebar */
@@ -1076,6 +1083,7 @@ footer {
     width: var(--sidebar-width);
     padding-block: 1rem;
     height: 100%;
+    overflow-y: auto;
 
     color: var(--text);
     background: var(--card);
@@ -1303,6 +1311,21 @@ body {
   animation-direction: alternate;
   animation-timeline: --parallax-container;
 }
+
+.parallax-notice {
+  display: none;
+  visibility: hidden;
+}
+
+@supports
+  (not (animation-timeline: --parallax-container)) or
+  (not (scroll-timeline-name: --parallax-container)) {
+  .parallax-notice {
+    display: block;
+    visibility: visible;
+  }
+}
+
 
 /* ========================================================================== */
 /* Theme transitions                                                          */

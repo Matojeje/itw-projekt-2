@@ -34,7 +34,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Add sounds to header buttons
 
-  $all("header .buttons > *").forEach(el => registerSounds(el, {
+  $all("header .buttons > *, #mobile-nav li.setting")
+  .forEach(el => registerSounds(el, {
     pointerenter: "hover",
     focusin: "hover",
     pointerdown: "press",
@@ -43,7 +44,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Add sounds to nav links
 
-  $all("header nav li a, #mobile-nav nav li:has(.icon)").forEach(el => registerSounds(el, {
+  $all("header nav li a, #mobile-nav nav li:has(.icon):not(.setting)")
+  .forEach(el => registerSounds(el, {
     pointerenter: "hover",
     focusin: "hover",
     pointerdown: "tap",
@@ -89,7 +91,7 @@ document.addEventListener("tooltipsAdded", e => {
   /** @type {HTMLElement[]} */
   const tooltipped = /** @type {CustomEvent} */ (e).detail
   tooltipped.forEach(el => registerSounds(el, {
-    pointerenter: "tooltip",
+    mouseenter: "tooltip", // Mouse only
     focusin: "tooltip"
   }))
 })
