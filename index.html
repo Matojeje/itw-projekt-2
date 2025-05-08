@@ -219,8 +219,8 @@
           </p>
 
           <p>
-            <span lang="cs">Sportovec úplně nejsem, ale rád si zajedu na kole jen tak pro radost, třeba na Náklo nebo <a href="https://www.zmrzlina-starnov.cz/">na zmrzlinu do Štarnova</a>&nbsp;&ndash; placatá Haná je pro cyklistiku jako stvořená. Rád i&nbsp;chodím na procházky, abych měl od ostatních klid. Většinu času kdy jsem venku mám na sobě sluchátka, a&nbsp;poslouchám hudbu nebo <span data-term="2" role="term" tabindex="0">podcasty</span>. Jinak se zajímám o programování, typo&shy;grafii, karto&shy;grafii, lingvistiku, a&nbsp;do hudebky jsem chodil od školky až do konce střední.</span>
-            <span lang="en" hidden>I'm not one to exercise, but I&nbsp;like cycling around for leisure, like to visit the local quarry lake or <a href="https://www.zmrzlina-starnov.cz/">get some ice cream</a>&nbsp;&ndash; I&nbsp;live in a very flat region which is ideal for cycling. I&nbsp;also like taking walks to get a break from everyone else. Most of the time outside I'm wearing headphones so I&nbsp;can listen to music or <span data-term="2" role="term" tabindex="0">podcasts</span>. Other than that, I'm interested in programming, typo&shy;graphy, carto&shy;graphy, linguistics, and I've had piano lessons for over a decade.</span>
+            <span lang="cs">Sportovec úplně nejsem, ale rád si zajedu na kole jen tak pro radost, třeba <span class="personal-info">na Náklo nebo <a href="https://www.zmrzlina-starnov.cz/">na zmrzlinu do Štarnova</a>&nbsp;&ndash; placatá Haná je pro cyklistiku jako stvořená</span>. Rád i&nbsp;chodím na procházky, abych měl od ostatních klid. Většinu času kdy jsem venku mám na sobě sluchátka, a&nbsp;poslouchám hudbu nebo <span data-term="2" role="term" tabindex="0">podcasty</span>. Jinak se zajímám o programování, typo&shy;grafii, karto&shy;grafii, lingvistiku, a&nbsp;do hudebky jsem chodil od školky až do konce střední.</span>
+            <span lang="en" hidden>I'm not one to exercise, but I&nbsp;like cycling around for leisure, like to visit <span class="personal-info">the local quarry lake or <a href="https://www.zmrzlina-starnov.cz/">get some ice cream</a>&nbsp;&ndash; I&nbsp;live in a very flat region which is ideal for cycling</span>. I&nbsp;also like taking walks to get a break from everyone else. Most of the time outside I'm wearing headphones so I&nbsp;can listen to music or <span data-term="2" role="term" tabindex="0">podcasts</span>. Other than that, I'm interested in programming, typo&shy;graphy, carto&shy;graphy, linguistics, and I've had piano lessons for over a decade.</span>
           </p>
         </article>
 
@@ -605,6 +605,7 @@
   </aside>
 
   <slot id="sound-effects" hidden aria-hidden>
+    <!-- UI -->
     <audio src="assets/sounds/hover.wav" data-sound="hover" preload data-volume="0.3"></audio>
     <audio src="assets/sounds/popup.wav" data-sound="popup" preload></audio>
     <audio src="assets/sounds/press.wav" data-sound="press" preload></audio>
@@ -617,6 +618,19 @@
     <audio src="assets/sounds/zoomin.wav" data-sound="zoomin" preload data-volume="0.6"></audio>
     <audio src="assets/sounds/zoomout.wav" data-sound="zoomout" preload data-volume="0.6"></audio>
     <audio src="assets/sounds/bounce.wav" data-sound="bounce" preload data-volume="0.3"></audio>
+    <!-- Piano -->
+    <audio src="assets/sounds/piano/p-01.ogg" data-piano="1"></audio>
+    <audio src="assets/sounds/piano/p-02.ogg" data-piano="2"></audio>
+    <audio src="assets/sounds/piano/p-03.ogg" data-piano="3"></audio>
+    <audio src="assets/sounds/piano/p-04.ogg" data-piano="4"></audio>
+    <audio src="assets/sounds/piano/p-05.ogg" data-piano="5"></audio>
+    <audio src="assets/sounds/piano/p-06.ogg" data-piano="6"></audio>
+    <audio src="assets/sounds/piano/p-07.ogg" data-piano="7"></audio>
+    <audio src="assets/sounds/piano/p-08.ogg" data-piano="8"></audio>
+    <audio src="assets/sounds/piano/p-09.ogg" data-piano="9"></audio>
+    <audio src="assets/sounds/piano/p-10.ogg" data-piano="10"></audio>
+    <audio src="assets/sounds/piano/p-11.ogg" data-piano="11"></audio>
+    <!-- Space for dynamically adding overlapping sounds -->
     <slot id="extra-audio"></slot>
   </slot>
 

@@ -12,9 +12,14 @@ const availableSounds = new Map()
 const extraSlot = /** @type {HTMLDivElement} */
   (document.getElementById("extra-audio"))
 
+/** Piano keys that are currently not playing @type {Set<Number>} */
+const availableKeys = new Set()
+const noteNames = "F♯3,G♯3,A♯3,C♯4,D♯4,F♯4,G♯4,A♯4,C♯5,D♯5,F♯5".split(",")
+
 // First, find all sounds on the page
 
 document.addEventListener("DOMContentLoaded", () => {
+
   /** @type {NodeListOf<HTMLAudioElement>} */
   const audios = document.querySelectorAll("audio[data-sound]")
   audios.forEach(audio => {
@@ -23,6 +28,20 @@ document.addEventListener("DOMContentLoaded", () => {
     if (audio.dataset.volume) audio.volume = parseFloat(audio.dataset.volume)
     availableSounds.set(soundName, audio)
   })
+
+  // Also add piano notes
+
+  const pianoVolume = 0.3
+  /** @type {NodeListOf<HTMLAudioElement>} */
+  const notes = document.querySelectorAll("audio[data-piano]")
+  notes.forEach(note => {
+    // Type cast to get rid of `undefined` ensured by the selector above
+    const key = /** @type {string} */ (note.dataset.piano)
+    availableSounds.set("piano-" + key, note)
+    note.volume = 0
+    note.addEventListener("ended", releaseNote)
+  })
+
   console.debug(`Loaded ${availableSounds.size} sounds:`, availableSounds)
 
   // Add sounds to links
@@ -83,6 +102,78 @@ document.addEventListener("DOMContentLoaded", () => {
     pointerenter: "bounce",
     focusin: "bounce"
   }))
+
+  // Piano easter egg
+
+  notes.forEach(note => availableKeys.add(parseInt(note.dataset.piano || "")))
+
+  $(".tracks")?.addEventListener("pointerdown", e => {
+
+    // Restrict this to desktop
+    const isMobile = window.matchMedia("(max-width: 768px)").matches
+    if (isMobile) return
+
+    // Ten fingers
+    if (availableKeys.size == 0) return console.error("I ran out of notes to play!")
+
+    // Get a random note
+    const newIndex = Math.floor(Math.random() * availableKeys.size)
+    const newKey = Array.from(availableKeys)[newIndex]
+    availableKeys.delete(newKey)
+
+    /** @type {HTMLAudioElement|undefined} */
+    const note = availableSounds.get("piano-" + newKey)
+    if (!note) return
+
+    // Play it
+    note.volume = pianoVolume
+    note.currentTime = 0
+    note.play()
+
+    // Animate Riolu
+    $(".tracks li.media")?.animate([
+      {translate: "0 0"},
+      {translate: "0 -1.3%"},
+      {translate: "0 -2.0%"},
+      {translate: "0 -1.3%"},
+      {translate: "0 0"}
+    ], {
+      duration: 300,
+      easing: "ease-in-out"
+    })
+
+    console.debug("Playing note", newKey, `(${noteNames[newKey-1]})`)
+  })
+
+  $(".tracks")?.addEventListener("pointerup", releaseNote)
+  // $(".tracks")?.addEventListener("pointerleave", releaseNote)
+
+  function releaseNote() {
+    const currentNotes = Array.from(notes)
+    .filter(note => note.volume == pianoVolume && !note.paused)
+
+    const releaseTime = 210
+    const steps = 10
+    const volumeStep = pianoVolume / steps
+    const timeStep = releaseTime / steps
+
+    // Gradual release phase
+    for (let i = 1; i <= steps; i++) {
+      setTimeout(() => {
+        currentNotes.forEach(note => {
+          // Decresase volume by a bit
+          note.volume = Math.max(0, note.volume - volumeStep)
+
+          // Finish playing
+          if (note.volume <= volumeStep) setTimeout(() => {
+            note.pause()
+            note.currentTime = note.duration
+            availableKeys.add(parseInt(note.dataset.piano || ""))
+          }, timeStep)
+        })
+      }, i * timeStep)
+    }
+  }
 })
 
 // Add sounds to tooltips

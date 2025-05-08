@@ -107,10 +107,17 @@
 
     & p span.personal-info {
       word-break: break-all;
-      text-security: square;
-      -moz-text-security: square;
-      -webkit-text-security: square;
-      font-size: 1.5ex;
+      text-security: disc;
+      -moz-text-security: disc;
+      -webkit-text-security: disc;
+      letter-spacing: .2ex;
+    }
+
+    & .personal-info a[href^="http"]::after { content: "" }
+
+    & > :is(main, footer) .personal-info :is(a, :link, :visited) {
+      color: inherit !important;
+      pointer-events: none;
     }
   }
 
@@ -678,10 +685,6 @@ main {
       text-align: justify;
     }
 
-    & > :is(h2, h3, h4) {
-      padding-inline: var(--gutter);
-    }
-
     & h2 {
       text-align: center;
       margin-bottom: 1em;
@@ -982,6 +985,7 @@ section#showcase {
     gap: 2rem;
     padding-top: 1rem;
     margin-bottom: 4rem;
+    user-select: none;
 
     position: relative;
 
@@ -1019,6 +1023,7 @@ footer {
   background: var(--card);
   & article#sources {
     & h2 { margin-bottom: 1rem }
+    & ul { padding-left: 1.2rem }
     & li a:first-child { font-weight: bold }
   }
 
